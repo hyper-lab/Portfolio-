@@ -530,7 +530,14 @@ a { color: inherit; text-decoration: none; }
 }
 .contact-sub { color: var(--muted); margin: 0 auto; max-width: 50ch; }
 
-/* Email pill */
+/* Contact pills */
+.contact-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
 .email-pill {
   display: inline-flex;
   align-items: center;
