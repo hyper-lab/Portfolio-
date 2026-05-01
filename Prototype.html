@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CasePoint — Legal RAG System | HiFi Prototype</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#6C3AFF;--pl:#EDE9FE;--pd:#5B21B6;--p2:#7C5CFF;
+  --bg:#F8F7FF;--w:#fff;--text:#0F0D1A;--m:#6B7280;--bd:#E5E7EB;--bd2:#D1D5DB;
+  --gr:#10B981;--re:#EF4444;--bl:#3B82F6;--am:#F59E0B;--or:#F97316;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Courier New',monospace;
+  --sb:232px;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+.screen{display:none;width:100%;height:100vh}
+.screen.on{display:flex}
+
+/* ── LOGIN ── */
+#lg{background:linear-gradient(135deg,#F8F7FF 0%,#EEE8FF 50%,#E8F0FF 100%);align-items:center;justify-content:center;flex-direction:column}
+.lc{background:#fff;border-radius:16px;padding:40px 36px;width:440px;border:1px solid var(--bd)}
+.llogo{display:flex;flex-direction:column;align-items:center;margin-bottom:28px}
+.lico{width:56px;height:56px;background:linear-gradient(135deg,#7C5CFF,#5B21B6);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:24px}
+.lico svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:1.8}
+.llogo h1{font-size:20px;font-weight:700;color:var(--text)}
+.llogo p{font-size:12px;color:var(--m)}
+.lcard-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.lcard-sub{font-size:13px;color:var(--m);margin-bottom:24px}
+.cred-box{background:#F9FAFB;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:22px}
+.cred-box-title{font-size:11px;font-weight:600;color:var(--m);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
+.cred-row{display:grid;grid-template-columns:80px 1fr 1fr;gap:4px;padding:5px 0;border-bottom:1px solid var(--bd);font-size:11px}
+.cred-row:last-child{border-bottom:none}
+.cred-role{font-weight:600;color:var(--p)}
+.cred-val{color:var(--m);font-family:var(--mono);font-size:10px;padding-top:1px}
+.flbl{font-size:11px;font-weight:600;color:#374151;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.finput{width:100%;border:1px solid var(--bd);border-radius:9px;padding:10px 14px 10px 38px;font-size:13px;outline:none;margin-bottom:14px;font-family:var(--font);background:#fff;color:var(--text);transition:border .2s}
+.finput:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(108,58,255,.08)}
+.finput-wrap{position:relative;margin-bottom:14px}
+.finput-wrap .finput{margin-bottom:0;padding-right:40px}
+.finput-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9CA3AF;font-size:14px;pointer-events:none}
+.frow-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.forgot{font-size:12px;color:var(--p);font-weight:500;cursor:pointer}
+.peye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:#9CA3AF}
+.signin-btn{width:100%;background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.signin-btn:hover{opacity:.9}
+.lerr{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:9px 12px;font-size:12px;color:#DC2626;margin-bottom:14px;display:none}
+.lfooter{margin-top:24px;font-size:11px;color:#9CA3AF;text-align:center}
+
+/* ── SIDEBAR ── */
+.sb{width:var(--sb);min-width:var(--sb);background:#fff;border-right:1px solid var(--bd);display:flex;flex-direction:column;height:100vh;flex-shrink:0}
+.sb-top{padding:16px 14px 12px;border-bottom:1px solid var(--bd)}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:0}
+.sb-bx{width:32px;height:32px;background:linear-gradient(135deg,#7C5CFF,#5B21B6);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-bx svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.8}
+.sb-bt{font-size:14px;font-weight:700}.sb-bs{font-size:10px;color:var(--m)}
+.addbtn{margin:10px 12px 4px;background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:9px;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s}
+.addbtn:hover{opacity:.88}
+.sbnav{padding:8px 10px;flex:1}
+.sbnav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13px;font-weight:500;color:var(--m);cursor:pointer;margin-bottom:1px;text-decoration:none;transition:all .15s}
+.sbnav a svg{width:15px;height:15px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8}
+.sbnav a:hover{background:#F5F3FF;color:var(--text)}
+.sbnav a.on{background:#F0EBFF;color:var(--p);font-weight:600}
+.src-sec{padding:0 12px;margin-top:2px}
+.src-lbl{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.07em;padding:6px 10px;display:flex;align-items:center;justify-content:space-between}
+.src-cnt{background:var(--p);color:#fff;border-radius:20px;font-size:10px;padding:1px 7px;font-weight:600}
+.src-drop{border:1.5px dashed #D1D5DB;border-radius:10px;padding:16px 10px;text-align:center;font-size:11px;color:#9CA3AF;line-height:1.7;margin:4px 0}
+.src-item{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:8px;background:#F5F3FF;margin-bottom:3px;font-size:11px;font-weight:500;border:1px solid #EDE9FE}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--gr);flex-shrink:0}
+.src-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.src-item .xb{background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:14px;padding:0;line-height:1}
+.sb-user{padding:12px 14px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:9px}
+.ava{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.ava.ba{background:#E0E7FF;color:#4338CA}
+.ava.ad{background:#F0EBFF;color:var(--p)}
+.ava.av{background:#F0EBFF;color:var(--p)}
+.uinf{flex:1;overflow:hidden}
+.uemail{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.urole{font-size:9px;font-weight:700;color:#fff;background:var(--p);border-radius:4px;padding:1px 6px;display:inline-block;margin-top:2px;letter-spacing:.05em;text-transform:uppercase}
+.urole.basic-role{background:#6366F1}
+.urole.adv-role{background:#8B5CF6}
+.urole.adm-role{background:#7C3AED}
+.lout{color:var(--m);font-size:12px;font-weight:500;cursor:pointer;background:none;border:none;font-family:var(--font);padding:0;display:flex;align-items:center;gap:5px;margin-top:6px;transition:color .15s}
+.lout:hover{color:var(--re)}
+.lout svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.scroll{flex:1;overflow-y:auto;padding:28px 36px}
+.ptitle{font-size:24px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.psub{font-size:13px;color:var(--m);margin-bottom:22px;line-height:1.55}
+
+/* ── CHAT ── */
+.chat-wrap{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.msgs{flex:1;overflow-y:auto;padding:0 0 16px;display:flex;flex-direction:column}
+.cwelcome{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:40px}
+.cicon{width:64px;height:64px;background:linear-gradient(135deg,#7C5CFF,#5B21B6);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.cicon svg{width:32px;height:32px;fill:none;stroke:#fff;stroke-width:1.6}
+.cwelcome h2{font-size:24px;font-weight:700;margin-bottom:6px}
+.cwelcome p{font-size:14px;color:var(--m);max-width:400px;line-height:1.6}
+.cwarn-pill{display:inline-flex;align-items:center;gap:7px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:20px;padding:8px 16px;font-size:13px;color:#C2410C;font-weight:500;margin-top:16px}
+.cwarn-dot{width:8px;height:8px;border-radius:50%;background:#F97316;flex-shrink:0}
+.msg-user-wrap{display:flex;justify-content:flex-end;padding:6px 24px}
+.msg-user{background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border-radius:18px 18px 4px 18px;padding:12px 16px;font-size:13.5px;line-height:1.6;max-width:600px;font-weight:500}
+.msg-ai-wrap{padding:6px 24px}
+.msg-ai{background:#fff;border:1px solid var(--bd);border-radius:4px 18px 18px 18px;padding:16px 18px;font-size:13.5px;line-height:1.7;max-width:760px}
+.msg-ai-meta{font-size:11px;color:#9CA3AF;display:flex;align-items:center;gap:5px;margin-top:8px}
+.meta-dot{width:5px;height:5px;border-radius:50%;background:#9CA3AF}
+.sources-wrap{background:#F9FAFB;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-top:10px}
+.sources-lbl{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.06em;margin-bottom:8px;text-transform:uppercase}
+.src-chip-row{background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color .15s}
+.src-chip-row:hover{border-color:var(--p)}
+.src-chip-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.src-chip-name{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.src-chip-pg{font-size:11px;color:var(--m)}
+.rel-badge{background:var(--p);color:#fff;border-radius:5px;font-size:10px;padding:2px 8px;font-weight:600}
+.src-chip-snippet{font-size:11px;color:var(--m);line-height:1.5;font-style:italic}
+.suggested-wrap{padding:12px 24px}
+.sug-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sug-lbl{font-size:11px;font-weight:700;color:var(--p);display:flex;align-items:center;gap:5px;white-space:nowrap}
+.sug-lbl svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2}
+.sug-btn{border:1px solid var(--bd);background:#fff;border-radius:20px;padding:7px 14px;font-size:12px;font-family:var(--font);color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
+.sug-btn:hover{border-color:var(--p);color:var(--p);background:#F5F3FF}
+.cinput-area{padding:12px 24px 14px;border-top:1px solid var(--bd);background:#fff}
+.cinput-row{display:flex;gap:8px;align-items:center}
+.cinput-row input{flex:1;border:1px solid var(--bd);border-radius:12px;padding:12px 16px;font-size:13px;font-family:var(--font);outline:none;background:#fff;color:var(--text);transition:border .2s}
+.cinput-row input:focus{border-color:var(--p)}
+.cinput-row input:disabled{background:#F9FAFB;cursor:not-allowed;color:var(--m)}
+.model-sel{display:flex;align-items:center;border:1px solid var(--bd);border-radius:9px;background:#fff;overflow:hidden;flex-shrink:0}
+.model-sel select{border:none;outline:none;padding:8px 10px;font-size:12px;font-family:var(--font);background:transparent;color:var(--text);cursor:pointer}
+.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#7C5CFF,#5B21B6);border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s}
+.send-btn:hover{opacity:.88}
+.send-btn:disabled{background:#D1D5DB;cursor:not-allowed}
+.send-btn svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2}
+.disc{font-size:11px;color:#9CA3AF;text-align:center;margin-top:7px}
+
+/* ── LIBRARY ── */
+.lib-header{margin-bottom:4px}
+.lib-count{font-size:13px;color:var(--m);margin-bottom:20px}
+.searchbar{display:flex;align-items:center;border:1px solid var(--bd);border-radius:10px;background:#fff;padding:0 14px;gap:8px;margin-bottom:14px}
+.searchbar svg{width:15px;height:15px;stroke:var(--m);fill:none;stroke-width:1.8;flex-shrink:0}
+.searchbar input{border:none;outline:none;font-size:13px;font-family:var(--font);padding:11px 0;flex:1;background:transparent;color:var(--text)}
+.ftabs{display:flex;gap:6px;margin-bottom:22px}
+.ftab{border:1px solid var(--bd);background:#fff;border-radius:20px;padding:6px 16px;font-size:13px;font-family:var(--font);cursor:pointer;font-weight:500;color:var(--m);transition:all .15s}
+.ftab.on{background:var(--p);color:#fff;border-color:var(--p)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.lcard2{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:20px;transition:all .2s;cursor:pointer}
+.lcard2:hover{border-color:#C4B5FD;box-shadow:0 4px 16px rgba(108,58,255,.08)}
+.lch{display:flex;align-items:flex-start;gap:10px;margin-bottom:4px}
+.picon{width:36px;height:36px;background:#FEE2E2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#B91C1C;flex-shrink:0;border:1px solid #FECACA}
+.lcname{font-size:13px;font-weight:700;line-height:1.4}
+.lccat{font-size:11px;color:var(--m);margin-top:1px}
+.lcupl{font-size:11px;color:var(--p);font-weight:500;margin-top:2px}
+.rbadge{background:#DCFCE7;color:#166534;border-radius:20px;font-size:10px;font-weight:700;padding:2px 9px;white-space:nowrap;border:1px solid #BBF7D0}
+.lactions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0;margin-top:14px}
+.ab{display:flex;align-items:center;gap:5px;border:1px solid var(--bd);border-radius:7px;padding:6px 11px;font-size:12px;font-family:var(--font);background:#fff;cursor:pointer;font-weight:500;transition:all .15s;color:var(--text)}
+.ab svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ab:hover{background:#F5F3FF;border-color:#C4B5FD}
+.ab.del{color:var(--re);border-color:#FECACA}.ab.del:hover{background:#FEF2F2}
+.ab.edt{color:var(--p);border-color:#C4B5FD}
+.ab.rep{color:var(--or);border-color:#FED7AA}
+.more-actions{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--m);cursor:pointer;margin-top:8px;padding:4px 0;font-weight:500}
+.more-actions svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+.lhint{font-size:11px;color:#9CA3AF;margin-top:10px;padding-top:10px;border-top:1px solid #F3F4F6}
+
+/* ── INSIGHTS ── */
+.sg4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.sg3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.scard{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:18px 20px;position:relative}
+.slbl2{font-size:10px;color:var(--m);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between}
+.sval{font-size:28px;font-weight:700;line-height:1;color:var(--text)}
+.sdesc{font-size:11px;color:var(--m);margin-top:5px;line-height:1.45}
+.covcard{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:14px 18px;position:relative}
+.covlbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:#9CA3AF;margin-bottom:3px;text-transform:uppercase}
+.covpct{font-size:20px;font-weight:700}
+.covsub{font-size:11px;color:var(--m)}
+.coverage-note{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#92400E}
+.coverage-note strong{font-weight:600}
+.chcg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.chcard{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:18px}
+.chcard h3{font-size:15px;font-weight:700;margin-bottom:3px}
+.chsub{font-size:11px;color:var(--m);margin-bottom:14px;line-height:1.45}
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.blbl{font-size:12px;width:110px;flex-shrink:0;font-weight:500}
+.btrack{flex:1;height:8px;background:#F3F4F6;border-radius:4px;overflow:hidden}
+.bfill{height:100%;background:var(--p);border-radius:4px}
+.bfill.am{background:var(--am)}
+.bcount{font-size:11px;color:var(--m);min-width:16px;text-align:right}
+.donut-wrap{display:flex;align-items:center;gap:16px;padding:6px 0}
+.donut-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:5px}
+.dl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dl-lbl{color:var(--m)}.dl-cnt{font-weight:600;margin-left:4px}
+.echrt{font-size:12px;color:var(--m);text-align:center;padding:24px 0}
+.lf-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.lf-filter label{font-size:11px;font-weight:600;color:var(--m);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.lf-filter select{width:100%;border:1px solid var(--bd);border-radius:8px;padding:9px 12px;font-size:12px;font-family:var(--font);outline:none;background:#fff;color:var(--text)}
+.lftbl{background:#fff;border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.lfhead{padding:16px 20px;border-bottom:1px solid var(--bd)}
+.lfhead h3{font-size:16px;font-weight:700}
+.lfhead p{font-size:12px;color:var(--m);margin-top:2px}
+.lfcnt{font-size:11px;color:var(--m);padding:9px 20px;border-bottom:1px solid var(--bd);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+table.lft{width:100%;border-collapse:collapse;table-layout:fixed}
+.lft th{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.05em;padding:10px 18px;text-align:left;border-bottom:1px solid var(--bd);background:#FAFAFA;text-transform:uppercase}
+.lft td{font-size:12px;padding:12px 18px;border-bottom:1px solid #F3F4F6;vertical-align:top}
+.fname-link{color:var(--p);font-weight:600;font-size:12px;display:flex;align-items:center;gap:5px;cursor:pointer;text-decoration:none}
+.fname-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.ftag{border-radius:5px;font-size:10px;padding:2px 8px;font-weight:600;display:inline-block;margin:2px 2px 0 0}
+.ftag.idx{background:#F0F9FF;color:#0369A1;border:1px solid #BAE6FD}
+.ftag.suc{background:#F0FDF4;color:#166534;border:1px solid #BBF7D0}
+.ftag.crim{background:#F5F3FF;color:var(--pd);border:1px solid #DDD6FE}
+.ftag.ncrim{background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA}
+.meta-badge{border-radius:5px;font-size:10px;padding:2px 8px;font-weight:600;display:inline-block}
+.mb-inf{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
+.mb-conf{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
+.mb-pend{background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA;display:inline-flex;align-items:center;gap:3px}
+.mb-nf{background:#F3F4F6;color:#6B7280;border:1px solid var(--bd)}
+.mb-unver{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+.mb-aiinf{background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE}
+.mb-appr{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
+.meta-actions{display:flex;gap:5px;margin-top:5px}
+.ma-btn{border:1px solid var(--bd);border-radius:6px;padding:3px 7px;font-size:11px;background:#fff;cursor:pointer;color:var(--m);font-family:var(--font);display:inline-flex;align-items:center;gap:3px}
+.ma-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+.audbtn{border:1px solid var(--bd);color:var(--text);border-radius:7px;padding:5px 12px;font-size:12px;font-family:var(--font);background:#fff;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:4px}
+.audbtn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── REPORTS ── */
+.rfilter-card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:22px}
+.rfilter-card h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.rfilter-card p{font-size:12px;color:var(--m);margin-bottom:16px}
+.fgrid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end}
+.ff label{font-size:11px;color:var(--m);display:block;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.ff input,.ff select{width:100%;border:1px solid var(--bd);border-radius:8px;padding:9px 11px;font-size:12px;font-family:var(--font);outline:none;background:#fff;color:var(--text)}
+.filter-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;align-items:center}
+.filter-note{font-size:11px;color:var(--m);flex:1}
+.applybtn{background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-family:var(--font);font-weight:600;cursor:pointer}
+.resetbtn{border:1px solid var(--bd);background:#fff;color:var(--m);border-radius:8px;padding:9px 14px;font-size:13px;font-family:var(--font);cursor:pointer}
+.refreshbtn{border:1px solid var(--bd);background:#fff;color:var(--text);border-radius:9px;padding:8px 14px;font-size:13px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:500}
+.refreshbtn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.rg4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.rg2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.rcard2{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:20px}
+.rcard2 h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.rsub{font-size:12px;color:var(--m);margin-bottom:14px}
+.uptbl{width:100%;border-collapse:collapse}
+.uptbl th{font-size:10px;font-weight:700;color:#9CA3AF;padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd);letter-spacing:.05em;text-transform:uppercase}
+.uptbl td{font-size:12px;padding:10px 12px;border-bottom:1px solid #F3F4F6}
+.putable{background:#fff;border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.puhead{padding:16px 20px;border-bottom:1px solid var(--bd)}
+.puhead h3{font-size:15px;font-weight:700}.puhead p{font-size:12px;color:var(--m);margin-top:2px}
+table.put{width:100%;border-collapse:collapse;table-layout:fixed}
+.put th{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.05em;padding:10px 20px;text-align:left;border-bottom:1px solid var(--bd);background:#FAFAFA;text-transform:uppercase}
+.put td{font-size:12px;padding:11px 20px;border-bottom:1px solid #F3F4F6}
+.rfooter{font-size:11px;color:#9CA3AF;text-align:center;padding:12px 0}
+
+/* ── ADMIN ── */
+.tabbar{display:flex;border-bottom:2px solid var(--bd);margin-bottom:22px}
+.tbtab{padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;color:var(--m);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;font-family:var(--font);background:none;border-top:none;border-left:none;border-right:none}
+.tbtab.on{color:var(--p);border-bottom-color:var(--p);font-weight:600}
+.admin-search-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.utblwrap{background:#fff;border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+table.ut{width:100%;border-collapse:collapse;table-layout:fixed}
+.ut th{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.05em;padding:10px 20px;text-align:left;border-bottom:1px solid var(--bd);background:#FAFAFA;text-transform:uppercase}
+.ut td{font-size:13px;padding:13px 20px;border-bottom:1px solid #F3F4F6;vertical-align:middle}
+.user-cell{display:flex;align-items:center;gap:10px}
+.rl{border-radius:6px;font-size:11px;padding:3px 10px;font-weight:600;border:1px solid transparent}
+.rl.adm{background:#F0EBFF;color:var(--pd);border-color:#DDD6FE}
+.rl.adv{background:#F0EBFF;color:var(--pd);border-color:#DDD6FE}
+.rl.bas{background:#EEF2FF;color:#4338CA;border-color:#C7D2FE}
+.icobtn{background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;color:var(--m);transition:all .15s;display:inline-flex;align-items:center}
+.icobtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.icobtn:hover{background:#F5F3FF;color:var(--p)}
+.creatbtn{background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-family:var(--font);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.creatbtn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
+.log-search-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.logwrap{background:#fff;border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.log-thead{display:grid;grid-template-columns:160px 160px 120px 1fr;gap:0;padding:10px 20px;border-bottom:1px solid var(--bd);background:#FAFAFA}
+.log-thead div{font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.05em;text-transform:uppercase}
+.logrow{display:grid;grid-template-columns:160px 160px 120px 1fr;gap:0;padding:11px 20px;border-bottom:1px solid #F3F4F6;font-size:12px;align-items:start}
+.logrow:last-child{border-bottom:none}
+.lts{color:var(--m);font-size:11px}.luser{font-weight:600;color:var(--text)}
+.lact{color:var(--p);font-weight:500}
+.lact.failed{color:var(--re)}
+.ldet{color:var(--m);font-size:11px;font-family:var(--mono);word-break:break-all;line-height:1.5}
+.expbtn{background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-size:13px;font-family:var(--font);font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.expbtn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.refbtn{border:1px solid var(--bd);background:#fff;border-radius:9px;padding:9px 14px;font-size:13px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text);font-weight:500}
+.refbtn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ── MODALS ── */
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,13,26,.5);display:none;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(2px)}
+.overlay.on{display:flex}
+.mbox{background:#fff;border-radius:16px;width:480px;max-height:90vh;overflow-y:auto;padding:28px 30px;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.mbox.wide{width:820px;padding:0;overflow:hidden;display:flex;flex-direction:column;max-height:88vh}
+.mhdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px}
+.mhdr h3{font-size:18px;font-weight:700}
+.mhdr p{font-size:12px;color:var(--m);margin-top:2px}
+.mcls{background:none;border:none;font-size:18px;cursor:pointer;color:var(--m);padding:4px;border-radius:6px;transition:background .15s;line-height:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px}
+.mcls:hover{background:#F3F4F6}
+.mf{margin-bottom:18px}
+.mf label{font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:6px}
+.mf input,.mf select{width:100%;border:1px solid var(--bd);border-radius:9px;padding:10px 14px;font-size:13px;font-family:var(--font);outline:none;background:#fff;color:var(--text);transition:border .2s}
+.mf input:focus,.mf select:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(108,58,255,.08)}
+.rgroup{border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.ropt{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;font-size:13px;font-family:var(--font);transition:background .15s;border-bottom:1px solid var(--bd)}
+.ropt:last-child{border-bottom:none}
+.ropt:hover{background:#F9FAFB}
+.ropt input[type=radio]{width:16px;height:16px;accent-color:var(--p);flex-shrink:0}
+.dzzone{border:2px dashed #C4B5FD;border-radius:12px;background:#FAFAFA;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s}
+.dzzone:hover{border-color:var(--p);background:#F5F3FF}
+.dz-icon{width:44px;height:44px;background:#F0EBFF;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.dz-icon svg{width:22px;height:22px;stroke:var(--p);fill:none;stroke-width:1.8}
+.dzzone p{font-size:13px;color:var(--m);font-weight:500}
+.dzzone span{font-size:11px;color:#9CA3AF}
+.infonote{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:9px;padding:10px 14px;font-size:12px;color:#1E40AF;margin-bottom:18px;display:flex;gap:8px}
+.mfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}
+.cancelbtn{border:1px solid var(--bd);background:#fff;color:var(--text);border-radius:9px;padding:10px 18px;font-size:13px;font-family:var(--font);cursor:pointer;font-weight:500}
+.savebtn{background:linear-gradient(135deg,#7C5CFF,#5B21B6);color:#fff;border:none;border-radius:9px;padding:10px 20px;font-size:13px;font-family:var(--font);font-weight:600;cursor:pointer}
+.pdf-mhdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--bd)}
+.pdf-mhdr h3{font-size:15px;font-weight:700}
+.pdftb{background:#2D2D2D;padding:8px 14px;display:flex;align-items:center;gap:6px}
+.tbtn{background:rgba(255,255,255,.12);border:none;color:#fff;border-radius:5px;padding:4px 9px;font-size:11px;cursor:pointer;font-family:var(--font);transition:background .15s}
+.tbtn:hover{background:rgba(255,255,255,.22)}
+.tpg{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:5px;padding:4px 8px;font-size:11px;font-family:var(--font);width:34px;text-align:center}
+.pdfbody{flex:1;overflow-y:auto;background:#404040;padding:20px;display:flex;flex-direction:column;gap:16px}
+.pdfpg{background:#fff;padding:40px 50px;font-size:12px;line-height:1.8;color:#111;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.ppghdr{font-weight:700;font-size:11px;color:#555;margin-bottom:18px;display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:8px}
+.pdfpg p{margin-bottom:11px}
+.pdfpg ol,.pdfpg ul{margin-left:20px;margin-bottom:11px}
+.pdfpg li{margin-bottom:5px}
+.it{font-style:italic}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="lg" class="screen on">
+  <div class="lc">
+    <div class="llogo">
+      <div class="lico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div>
+      <h1>CasePoint</h1><p>Legal RAG System</p>
+    </div>
+    <div class="lcard-title">Welcome back</div>
+    <div class="lcard-sub">Sign in to access your legal case documents.</div>
+    <div class="cred-box">
+      <div class="cred-box-title">Demo Credentials</div>
+      <div class="cred-row"><span class="cred-role">Basic</span><span class="cred-val">basicuser@gmail.com</span><span class="cred-val">basic123</span></div>
+      <div class="cred-row"><span class="cred-role">Advanced</span><span class="cred-val">advanceuser@gmail.com</span><span class="cred-val">advanced123</span></div>
+      <div class="cred-row"><span class="cred-role">Admin</span><span class="cred-val">admin@gmail.com</span><span class="cred-val">admin123</span></div>
+    </div>
+    <label class="flbl">Email</label>
+    <div style="position:relative;margin-bottom:14px">
+      <span class="finput-icon">&#9993;</span>
+      <input class="finput" id="lemail" type="email" placeholder="name@outlook.com" style="padding-left:36px;margin-bottom:0" />
+    </div>
+    <div class="frow-lbl"><label class="flbl" style="margin-bottom:0">Password</label><span class="forgot">Forgot?</span></div>
+    <div class="finput-wrap" style="margin-bottom:4px">
+      <span class="finput-icon">&#128274;</span>
+      <input class="finput" id="lpw" type="password" placeholder="Enter your password" style="padding-left:36px" />
+      <button class="peye" onclick="tpw()">&#128065;</button>
+    </div>
+    <div class="lerr" id="lerr">Incorrect email or password. Please try again.</div>
+    <button class="signin-btn" onclick="doLogin()" style="margin-top:10px">Sign in <svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+  </div>
+  <div class="lfooter">Secure access to your legal case management system<br>&copy; 2026 CasePoint</div>
+</div>
+
+<!-- ═══ BASIC SCREENS ═══ -->
+<div id="b-chat" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <div class="sbnav">
+      <a onclick="go('b','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a class="on" onclick="go('b','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('b','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt" id="bc-cnt">0</span></div><div id="bc-src"><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ba">U</div><div class="uinf"><div class="uemail">basicuser@gmail.com</div><span class="urole basic-role">BASIC</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="chat-wrap">
+    <div class="msgs" id="b-msgs">
+      <div class="cwelcome" id="b-welcome">
+        <div class="cicon"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div>
+        <h2>Welcome to CasePoint</h2>
+        <p>Your AI-powered legal research assistant. Ask a question about your active case documents to get cited, source-linked answers.</p>
+        <div class="cwarn-pill" id="b-warn"><div class="cwarn-dot"></div>Activate a source in the sidebar to begin</div>
+      </div>
+    </div>
+    <div class="cinput-area">
+      <div class="cinput-row">
+        <input id="b-inp" type="text" placeholder="Activate sources in sidebar to enable chat..." disabled />
+        <div class="model-sel"><select><option>OpenAI · GPT-4o</option><option>OpenAI · GPT-4o-mini</option></select></div>
+        <button class="send-btn" id="b-snd" disabled onclick="sendMsg('b')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></button>
+      </div>
+      <div class="disc">AI can make mistakes. Verify important legal details with source documents.</div>
+    </div>
+  </div>
+</div>
+
+<div id="b-lib" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <div class="sbnav">
+      <a class="on" onclick="go('b','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('b','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('b','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt" id="bl-cnt">0</span></div><div id="bl-src"><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ba">U</div><div class="uinf"><div class="uemail">basicuser@gmail.com</div><span class="urole basic-role">BASIC</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll">
+    <div class="ptitle">Source Library</div>
+    <div class="lib-count" id="b-lib-count">3 documents in your library</div>
+    <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search by name, category, or type..." /></div>
+    <div class="ftabs"><button class="ftab on" onclick="selTab(this,null,'b')">All</button><button class="ftab" onclick="selTab(this,'crim','b')">Criminal</button><button class="ftab" onclick="selTab(this,'ncrim','b')">Non-Criminal</button></div>
+    <div class="lgrid" id="b-lgrid"></div>
+  </div></div>
+</div>
+
+<div id="b-ins" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <div class="sbnav">
+      <a onclick="go('b','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('b','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a class="on" onclick="go('b','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">1</span></div><div><div class="src-item"><div class="sdot"></div><span>274778-CAGUIOA.pdf</span><button class="xb">&#215;</button></div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ba">U</div><div class="uinf"><div class="uemail">basicuser@gmail.com</div><span class="urole basic-role">BASIC</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll" id="b-ins-c"></div></div>
+</div>
+
+<!-- ═══ ADVANCED SCREENS ═══ -->
+<div id="v-chat" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('v','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a class="on" onclick="go('v','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('v','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt" id="vc-cnt">0</span></div><div id="vc-src"><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava av">A</div><div class="uinf"><div class="uemail">advanceuser@gmail.com</div><span class="urole adv-role">ADVANCED</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="chat-wrap">
+    <div class="msgs" id="v-msgs">
+      <div class="cwelcome" id="v-welcome">
+        <div class="cicon"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div>
+        <h2>Welcome to CasePoint</h2>
+        <p>Your AI-powered legal research assistant. Ask a question about your active case documents to get cited, source-linked answers.</p>
+        <div class="cwarn-pill" id="v-warn"><div class="cwarn-dot"></div>Activate a source in the sidebar to begin</div>
+      </div>
+    </div>
+    <div class="cinput-area">
+      <div class="cinput-row">
+        <input id="v-inp" type="text" placeholder="Activate sources in sidebar to enable chat..." disabled />
+        <div class="model-sel"><select><option>OpenAI · GPT-4o</option><option>OpenAI · GPT-4o-mini</option></select></div>
+        <button class="send-btn" id="v-snd" disabled onclick="sendMsg('v')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></button>
+      </div>
+      <div class="disc">AI can make mistakes. Verify important legal details with source documents.</div>
+    </div>
+  </div>
+</div>
+
+<div id="v-lib" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a class="on" onclick="go('v','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('v','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('v','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt" id="vl-cnt">0</span></div><div id="vl-src"><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava av">A</div><div class="uinf"><div class="uemail">advanceuser@gmail.com</div><span class="urole adv-role">ADVANCED</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll">
+    <div class="ptitle">Source Library</div>
+    <div class="lib-count">3 documents in your library</div>
+    <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search by name, category, or type..." /></div>
+    <div class="ftabs"><button class="ftab on" onclick="selTab(this,null,'v')">All</button><button class="ftab" onclick="selTab(this,'crim','v')">Criminal</button><button class="ftab" onclick="selTab(this,'ncrim','v')">Non-Criminal</button></div>
+    <div class="lgrid" id="v-lgrid"></div>
+  </div></div>
+</div>
+
+<div id="v-ins" class="screen">
+  <div class="sb"><div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('v','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('v','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a class="on" onclick="go('v','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">1</span></div><div><div class="src-item"><div class="sdot"></div><span>274778-CAGUIOA.pdf</span><button class="xb">&#215;</button></div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava av">A</div><div class="uinf"><div class="uemail">advanceuser@gmail.com</div><span class="urole adv-role">ADVANCED</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll" id="v-ins-c"></div></div>
+</div>
+
+<!-- ═══ ADMIN NAV HELPER ═══ -->
+<template id="admin-sb-inner">
+  <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+  <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+</template>
+
+<!-- ═══ ADMIN CHAT ═══ -->
+<div id="a-chat" class="screen">
+  <div class="sb" id="a-chat-sb">
+    <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('a','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a class="on" onclick="go('a','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('a','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+      <a onclick="go('a','rpt')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Reports</a>
+      <a onclick="go('a','adm')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Admin</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">1</span></div><div><div class="src-item"><div class="sdot"></div><span>274778-CAGUIOA.pdf</span><button class="xb">&#215;</button></div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ad">A</div><div class="uinf"><div class="uemail">admin@gmail.com</div><span class="urole adm-role">ADMIN</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="chat-wrap">
+    <div class="msgs" id="a-msgs">
+      <div style="flex:1"></div>
+      <div class="msg-user-wrap"><div class="msg-user">Who are the main petitioners and respondents in this case?</div></div>
+      <div class="msg-ai-wrap"><div class="msg-ai">
+        The main petitioners inferred from the caption formatting are:<br><br>
+        - AQUILINO PIMENTEL III<br>- ERNESTO OFRACIO<br>- JUNICE LIRZA MELGAR<br>- MARIA CIELO MAGNO<br>- MA. DOMINGA CECILIA B. PADILLA<br>- DANTE B. GATMAYTAN<br>- IBARRA M. GUTIERREZ<br>- SENTRO NG MGA NAGKAKAISA AT PROGRESIBONG MANGGAGAWA<br>- PUBLIC SERVICES LABOR INDEPENDENT CONFEDERATION FOUNDATION, INC.<br>- PHILIPPINE MEDICAL ASSOCIATION<br>- ATTY. DANILO ISIDERIO, FFW Legal Center (Petitioners-in-Intervention)<br><br>
+        The main respondents are:<br><br>
+        - HOUSE OF REPRESENTATIVES, represented by the Speaker, FERDINAND MARTIN ROMUALDEZ<br>- SENATE OF THE REPUBLIC OF THE PHILIPPINES, represented by Senate President FRANCIS ESCUDERO<br>- DEPARTMENT OF FINANCE SECRETARY RALPH RECTO<br>- EXECUTIVE SECRETARY LUCAS P. BERSAMIN<br>- PHILIPPINE HEALTH INSURANCE CORPORATION, represented by its President, EMMANUEL R. LEDESMA, JR.
+        <div class="msg-ai-meta"><div class="meta-dot"></div>OpenAI · GPT-4o-mini</div>
+        <div class="sources-wrap">
+          <div class="sources-lbl">Sources</div>
+          <div class="src-chip-row"><div class="src-chip-top"><div class="src-chip-name"><svg viewBox="0 0 16 16" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8"><path d="M3 2h8l3 3v9H3V2z"/><path d="M9 2v4h4"/></svg>274778-CAGUIOA.pdf</div><div style="display:flex;align-items:center;gap:6px"><span class="src-chip-pg">p. 1</span><span class="rel-badge">Relevant Source</span></div></div><div class="src-chip-snippet">DANILO ISIDERIO, FFW Legal Center, Petitioners-in-Intervention, v. HOUSE OF REPRESENTATIVES, represented by the Speaker, FERDINAND MARTIN ROMUALDEZ; SENATE OF THE REPUBLIC...</div></div>
+          <div class="src-chip-row"><div class="src-chip-top"><div class="src-chip-name"><svg viewBox="0 0 16 16" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8"><path d="M3 2h8l3 3v9H3V2z"/><path d="M9 2v4h4"/></svg>274778-CAGUIOA.pdf</div><div style="display:flex;align-items:center;gap:6px"><span class="src-chip-pg">p. 2</span><span class="rel-badge">Relevant Source</span></div></div><div class="src-chip-snippet">[Document Metadata] - Promulgation date: December 3, 2025 - Promulgation year: 2025 and 276233 G.R. No. 276233- ISAMBAYAN COALITION; MEMBERS OF U.P. LAW CLASS 1975...</div></div>
+        </div>
+      </div></div>
+      <div class="suggested-wrap">
+        <div class="sug-row">
+          <div class="sug-lbl"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a6 6 0 016 6c0 2-1 3.5-2 5H8c-1-1.5-2-3-2-5a6 6 0 016-6z"/></svg>SUGGESTED</div>
+          <button class="sug-btn" onclick="fillQ('a',this)">What is the primary legal issue being addressed in G.R. No. 274778?</button>
+          <button class="sug-btn" onclick="fillQ('a',this)">Who are the main petitioners and respondents in this case?</button>
+          <button class="sug-btn" onclick="fillQ('a',this)">What specific decision or ruling did the Supreme Court make in this en banc case?</button>
+        </div>
+      </div>
+    </div>
+    <div class="cinput-area">
+      <div class="cinput-row">
+        <input id="a-inp" type="text" placeholder="Ask about selected case documents..." />
+        <div class="model-sel"><select><option>OpenAI · GPT-4o</option><option>OpenAI · GPT-4o-mini</option></select></div>
+        <button class="send-btn" onclick="sendMsg('a')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></button>
+      </div>
+      <div class="disc">AI can make mistakes. Verify important legal details with source documents.</div>
+    </div>
+  </div>
+</div>
+
+<div id="a-lib" class="screen">
+  <div class="sb">
+    <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a class="on" onclick="go('a','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('a','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('a','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+      <a onclick="go('a','rpt')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Reports</a>
+      <a onclick="go('a','adm')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Admin</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">1</span></div><div><div class="src-item"><div class="sdot"></div><span>274778-CAGUIOA.pdf</span><button class="xb">&#215;</button></div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ad">A</div><div class="uinf"><div class="uemail">admin@gmail.com</div><span class="urole adm-role">ADMIN</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll">
+    <div class="ptitle">Source Library</div>
+    <div class="lib-count">4 documents in your library</div>
+    <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search by name, category, or type..." /></div>
+    <div class="ftabs"><button class="ftab on" onclick="selTab(this,null,'a')">All</button><button class="ftab" onclick="selTab(this,'crim','a')">Criminal</button><button class="ftab" onclick="selTab(this,'ncrim','a')">Non-Criminal</button></div>
+    <div class="lgrid" id="a-lgrid"></div>
+  </div></div>
+</div>
+
+<div id="a-ins" class="screen">
+  <div class="sb">
+    <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('a','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('a','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a class="on" onclick="go('a','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+      <a onclick="go('a','rpt')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Reports</a>
+      <a onclick="go('a','adm')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Admin</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">0</span></div><div><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ad">A</div><div class="uinf"><div class="uemail">admin@gmail.com</div><span class="urole adm-role">ADMIN</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll" id="a-ins-c"></div></div>
+</div>
+
+<div id="a-rpt" class="screen">
+  <div class="sb">
+    <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('a','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('a','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('a','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+      <a class="on" onclick="go('a','rpt')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Reports</a>
+      <a onclick="go('a','adm')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Admin</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">0</span></div><div><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ad">A</div><div class="uinf"><div class="uemail">admin@gmail.com</div><span class="urole adm-role">ADMIN</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <div class="ptitle">Statistical Reports</div>
+      <button class="refreshbtn"><svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>Refresh Reports</button>
+    </div>
+    <div class="psub">Admin-only system analytics generated from the structured CasePoint database.</div>
+    <div class="rfilter-card">
+      <h3>Filters</h3><p>Apply one or more filters to refresh every report section at once.</p>
+      <div class="fgrid5">
+        <div class="ff"><label>Date From</label><input type="date"></div>
+        <div class="ff"><label>Date To</label><input type="date"></div>
+        <div class="ff"><label>Case Type</label><select><option>All Case Types</option><option>Criminal Case</option><option>Non-Criminal Case</option></select></div>
+        <div class="ff"><label>Index Status</label><select><option>All Index Statuses</option><option>Indexed</option><option>Processing</option></select></div>
+        <div class="ff"><label>Uploader</label><select><option>All Uploaders</option><option>admin@gmail.com</option></select></div>
+      </div>
+      <div class="filter-btns"><span class="filter-note">Filters use the existing SQL-backed report endpoints and refresh all report sections together.</span><button class="resetbtn">Reset Filters</button><button class="applybtn">Apply Filters</button></div>
+    </div>
+    <div class="rg4">
+      <div class="scard"><div class="slbl2">TOTAL DOCUMENTS <svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:var(--bl);fill:none;stroke-width:1.6"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg></div><div class="sval">4</div><div class="sdesc">All documents currently stored in the library.</div></div>
+      <div class="scard"><div class="slbl2">CRIMINAL CASES <svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:var(--gr);fill:none;stroke-width:1.6"><path d="M8 1l1.8 3.6L14 5.4l-3 2.9.7 4.1L8 10.4l-3.7 2 .7-4.1-3-2.9 4.2-.8z"/></svg></div><div class="sval">3</div><div class="sdesc">Files tagged with the criminal case type.</div></div>
+      <div class="scard"><div class="slbl2">NON-CRIMINAL CASES <svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:var(--am);fill:none;stroke-width:1.6"><path d="M8 14s-6-3-6-8a6 6 0 0112 0c0 5-6 8-6 8z"/></svg></div><div class="sval">1</div><div class="sdesc">Files tagged with the non-criminal case type.</div></div>
+      <div class="scard"><div class="slbl2">INDEXED DOCUMENTS <svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:var(--p);fill:none;stroke-width:1.6"><path d="M8 2v12M2 8h12"/></svg></div><div class="sval">4</div><div class="sdesc">Files ready for retrieval and semantic search.</div></div>
+    </div>
+    <div class="rg2">
+      <div class="rcard2"><h3>Case Type Breakdown</h3><p class="rsub">Document counts grouped by the stored case type.</p>
+        <div class="brow"><div class="blbl">Criminal Case</div><div class="btrack"><div class="bfill" style="width:75%"></div></div><span class="bcount">3</span></div>
+        <div class="brow"><div class="blbl">Non-criminal Case</div><div class="btrack"><div class="bfill" style="width:25%"></div></div><span class="bcount">1</span></div>
+      </div>
+      <div class="rcard2"><h3>Index Status Breakdown</h3><p class="rsub">Operational view of indexing progress across library files.</p>
+        <div class="brow"><div class="blbl">Indexed</div><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bcount">4</span></div>
+      </div>
+    </div>
+    <div class="rg2">
+      <div class="rcard2"><h3>Non-Criminal Subcategories</h3><p class="rsub">Breakdown of the current non-criminal subcategory values.</p>
+        <div class="brow"><div class="blbl">Land Registration</div><div class="btrack"><div class="bfill" style="width:100%"></div></div><span class="bcount">1</span></div>
+      </div>
+      <div class="rcard2"><h3>Uploads Timeline</h3><p class="rsub">Monthly upload volume based on each document's upload date.</p>
+        <table class="uptbl"><thead><tr><th>Month</th><th>Uploads</th></tr></thead><tbody><tr><td>Apr 2026</td><td>4</td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="putable">
+      <div class="puhead"><h3>Documents Per Uploader</h3><p>Library document totals grouped by the uploader account.</p></div>
+      <table class="put"><thead><tr><th style="width:30%">Uploader</th><th style="width:40%">Email</th><th style="width:30%">Documents</th></tr></thead>
+      <tbody><tr><td><strong>Super Admin</strong></td><td>admin@gmail.com</td><td>4</td></tr></tbody></table>
+    </div>
+    <div class="rfooter">These reports use SQL-backed metadata only. Vector index data and AI summaries are not used for the counts shown here.</div>
+  </div></div>
+</div>
+
+<div id="a-adm" class="screen">
+  <div class="sb">
+    <div class="sb-top"><div class="sb-brand"><div class="sb-bx"><svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg></div><div><div class="sb-bt">CasePoint</div><div class="sb-bs">Legal RAG System</div></div></div></div>
+    <button class="addbtn" onclick="openM('m-upload')"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5"><path d="M12 5v14M5 12h14"/></svg>Add Source</button>
+    <div class="sbnav">
+      <a onclick="go('a','lib')"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Library</a>
+      <a onclick="go('a','chat')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Chat</a>
+      <a onclick="go('a','ins')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Document Insights</a>
+      <a onclick="go('a','rpt')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Reports</a>
+      <a class="on" onclick="go('a','adm')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Admin</a>
+    </div>
+    <div class="src-sec"><div class="src-lbl">ACTIVE SOURCES <span class="src-cnt">0</span></div><div><div class="src-drop">Drag files here from Library to activate them.</div></div></div>
+    <div style="flex:1"></div>
+    <div class="sb-user"><div class="ava ad">A</div><div class="uinf"><div class="uemail">admin@gmail.com</div><span class="urole adm-role">ADMIN</span></div></div>
+    <div style="padding:0 14px 12px"><button class="lout" onclick="logout()"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+  </div>
+  <div class="main"><div class="scroll">
+    <div class="ptitle">Admin Panel</div>
+    <div class="psub">Manage users, permissions, and track system activity</div>
+    <div class="tabbar">
+      <button class="tbtab on" onclick="atab('usr',this)">User Management</button>
+      <button class="tbtab" onclick="atab('log',this)">Activity Logs</button>
+    </div>
+    <div id="ap-usr">
+      <div class="admin-search-row">
+        <div class="searchbar" style="flex:1;max-width:620px;margin-bottom:0"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search users..." /></div>
+        <button class="creatbtn" onclick="openM('m-create')"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Create User</button>
+      </div>
+      <div class="utblwrap">
+        <table class="ut">
+          <thead><tr><th style="width:38%">User</th><th style="width:16%">Role</th><th style="width:28%">Last Login</th><th style="width:18%">Actions</th></tr></thead>
+          <tbody>
+            <tr><td><div class="user-cell"><div class="ava ad" style="width:36px;height:36px;font-size:13px">A</div><div><div style="font-weight:600;font-size:13px">Super Admin</div><div style="font-size:12px;color:var(--m)">admin@admin.com</div></div></div></td><td><span class="rl adm">admin</span></td><td style="font-size:12px;color:var(--m)">Apr 03, 2026, 09:39 PM PHT</td><td><button class="icobtn" onclick="openM('m-edit')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icobtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td></tr>
+            <tr><td><div class="user-cell"><div class="ava ad" style="width:36px;height:36px;font-size:13px">A</div><div><div style="font-weight:600;font-size:13px">Super Admin</div><div style="font-size:12px;color:var(--m)">admin@gmail.com</div></div></div></td><td><span class="rl adm">admin</span></td><td style="font-size:12px;color:var(--m)">Apr 16, 2026, 12:27 PM PHT</td><td><button class="icobtn" onclick="openM('m-edit')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icobtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td></tr>
+            <tr><td><div class="user-cell"><div class="ava ad" style="width:36px;height:36px;font-size:13px">A</div><div><div style="font-weight:600;font-size:13px">Super Admin</div><div style="font-size:12px;color:var(--m)">admin123@gmail.com</div></div></div></td><td><span class="rl adm">admin</span></td><td style="font-size:12px;color:var(--m)">Apr 15, 2026, 09:43 AM PHT</td><td><button class="icobtn" onclick="openM('m-edit')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icobtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td></tr>
+            <tr><td><div class="user-cell"><div class="ava ba" style="width:36px;height:36px;font-size:13px">U</div><div><div style="font-weight:600;font-size:13px">No name</div><div style="font-size:12px;color:var(--m)">user@gmail.com</div></div></div></td><td><span class="rl bas">basic</span></td><td style="font-size:12px;color:var(--m)">Apr 16, 2026, 12:17 PM PHT</td><td><button class="icobtn" onclick="openM('m-edit')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="icobtn"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="ap-log" style="display:none">
+      <div class="log-search-row">
+        <div class="searchbar" style="flex:1;max-width:620px;margin-bottom:0"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search activity logs..." /></div>
+        <div style="display:flex;gap:8px"><button class="refbtn"><svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>Refresh</button><button class="expbtn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export to CSV</button></div>
+      </div>
+      <div class="logwrap">
+        <div class="log-thead"><div>Timestamp</div><div>User</div><div>Action</div><div>Details</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:32 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">LOGIN_SUCCESS</div><div class="ldet">User successfully logged in.</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:30 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">search</div><div class="ldet">query='Who are the main petitioners and respondents in this case?'; model='openai'</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:27 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">LOGIN_SUCCESS</div><div class="ldet">User successfully logged in.</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:17 PM PHT</div><div><div class="luser">user@gmail.com</div><div style="font-size:10px;color:var(--m)">user@gmail.com</div></div><div class="lact">LOGIN_SUCCESS</div><div class="ldet">User successfully logged in.</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:16 PM PHT</div><div><div class="luser">user@gmail.com</div><div style="font-size:10px;color:var(--m)">user@gmail.com</div></div><div class="lact lact failed">LOGIN_FAILED</div><div class="ldet">Failed login attempt for email: user@gmail.com</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:16 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">search</div><div class="ldet">query='Who are the primary petitioners in this case?'; model='openai'</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:16 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">search</div><div class="ldet">query='What type of decision was rendered by the Supreme Court in this case?'; model='openai'</div></div>
+        <div class="logrow"><div class="lts">Apr 16, 2026, 12:15 PM PHT</div><div><div class="luser">Super Admin</div><div style="font-size:10px;color:var(--m)">admin@gmail.com</div></div><div class="lact">search</div><div class="ldet">query='What specific functionalities were tested during the User Acceptance Testing?'; model='openai'</div></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+<div class="overlay" id="m-upload">
+  <div class="mbox">
+    <div class="mhdr"><div><h3>Upload Case Document</h3></div><button class="mcls" onclick="closeM('m-upload')">&#215;</button></div>
+    <div class="mf"><label>Case Type</label><div class="rgroup"><label class="ropt"><input type="radio" name="ct" checked> Criminal Case</label><label class="ropt"><input type="radio" name="ct"> Non-Criminal Case</label></div></div>
+    <div class="mf"><label>Document</label><div class="dzzone"><div class="dz-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div><p>Drag &amp; drop your PDF/DOCX here or click to browse</p><span>Supported files: PDF, DOCX</span></div></div>
+    <div class="mfoot"><button class="cancelbtn" onclick="closeM('m-upload')">Cancel</button><button class="savebtn">Upload</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="m-editcat">
+  <div class="mbox">
+    <div class="mhdr"><div><h3>Edit File Category</h3><p>Update the classification for <strong>274778-CAGUIOA.pdf</strong></p></div><button class="mcls" onclick="closeM('m-editcat')">&#215;</button></div>
+    <div class="mf"><label>Case Type</label><div class="rgroup"><label class="ropt"><input type="radio" name="ec"> Criminal Case</label><label class="ropt"><input type="radio" name="ec" checked> Non-Criminal Case</label></div></div>
+    <div class="mf"><label>Sub-Category</label><select><option>Select a sub-category</option><option>Land Registration Case</option><option>Civil Case</option><option>Administrative</option></select></div>
+    <div class="infonote"><svg viewBox="0 0 16 16" style="width:14px;height:14px;stroke:#1E40AF;fill:none;stroke-width:1.8;flex-shrink:0"><circle cx="8" cy="8" r="6"/><path d="M8 7v5M8 5v.5"/></svg>Saving updates the file category immediately without reprocessing the document.</div>
+    <div class="mfoot"><button class="cancelbtn" onclick="closeM('m-editcat')">Cancel</button><button class="savebtn">Save Category</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="m-create">
+  <div class="mbox">
+    <div class="mhdr"><div><h3>Create User</h3></div><button class="mcls" onclick="closeM('m-create')">&#215;</button></div>
+    <div class="mf"><label>Email</label><input type="email" placeholder=""></div>
+    <div class="mf"><label>Password</label><div style="position:relative"><input type="password" style="width:100%;border:1px solid var(--bd);border-radius:9px;padding:10px 40px 10px 14px;font-size:13px;font-family:var(--font);outline:none" /><button class="peye">&#128065;</button></div></div>
+    <div class="mf"><label>Name</label><input type="text" placeholder=""></div>
+    <div class="mf"><label>Role</label><select><option>Basic User</option><option>Advanced User</option><option>Admin</option></select></div>
+    <div class="mfoot"><button class="cancelbtn" onclick="closeM('m-create')">Cancel</button><button class="savebtn">Create</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="m-edit">
+  <div class="mbox">
+    <div class="mhdr"><div><h3>Edit User</h3></div><button class="mcls" onclick="closeM('m-edit')">&#215;</button></div>
+    <div class="mf"><label>Email</label><input type="email" value="user@gmail.com"></div>
+    <div class="mf"><label>Name</label><input type="text"></div>
+    <div class="mf"><label>Role</label><select><option>Basic User</option><option selected>Advanced User</option><option>Admin</option></select></div>
+    <div class="mf"><label>Reset Password <span style="font-weight:400;color:var(--m)">(Admin Only, leave blank to keep current)</span></label><input type="password"></div>
+    <div class="mfoot"><button class="cancelbtn" onclick="closeM('m-edit')">Cancel</button><button class="savebtn">Save Changes</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="m-pdf">
+  <div class="mbox wide">
+    <div class="pdf-mhdr"><h3 id="pdf-ttl">Preview: 274778.pdf</h3><button class="mcls" onclick="closeM('m-pdf')">&#215;</button></div>
+    <div class="pdftb"><button class="tbtn">&#9776;</button><button class="tbtn">Draw</button><button class="tbtn">&#9998;</button><button class="tbtn">&#8722;</button><button class="tbtn">+</button><input class="tpg" value="1"><span style="color:#aaa;font-size:11px">of 136</span><div style="flex:1"></div><button class="tbtn">&#128269;</button><button class="tbtn">&#8615;</button></div>
+    <div class="pdfbody">
+      <div class="pdfpg">
+        <div class="ppghdr"><span>Republic of the Philippines — Supreme Court — Manila</span><span>EN BANC</span></div>
+        <p style="text-align:center;font-weight:700;font-size:14px;margin-bottom:16px">G.R. No. 274778</p>
+        <p><strong>AQUILINO PIMENTEL III; ERNESTO OFRACIO; JANICE LIRZA MELGAR; MARIA CIELO MAGNO; MA. DOMINGA CECILIA B. PADILLA; DANTE B. GATMAYTAN; IBARRA M. GUTIERREZ; SENTRO NG MGA NAGKAKAISA AT PROGRESIBONG MANGGAGAWA; PUBLIC SERVICES LABOR INDEPENDENT CONFEDERATION FOUNDATION, INC.; and PHILIPPINE MEDICAL ASSOCIATION,</strong> Petitioners,</p>
+        <p style="text-align:center">v.</p>
+        <p><strong>HOUSE OF REPRESENTATIVES</strong>, represented by the Speaker, <strong>FERDINAND MARTIN ROMUALDEZ; SENATE OF THE REPUBLIC OF THE PHILIPPINES</strong>, represented by Senate President <strong>FRANCIS ESCUDERO; DEPARTMENT OF FINANCE SECRETARY RALPH RECTO; EXECUTIVE SECRETARY LUCAS P. BERSAMIN;</strong> and <strong>PHILIPPINE HEALTH INSURANCE CORPORATION</strong>, represented by its President, <strong>EMMANUEL R. LEDESMA, JR.,</strong> Respondents.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CREDS={'basicuser@gmail.com':'basic123','advanceuser@gmail.com':'advanced123','admin@gmail.com':'admin123'};
+const ROLES={'basicuser@gmail.com':'b','advanceuser@gmail.com':'v','admin@gmail.com':'a'};
+const DOCS_B=[
+  {id:'caguioa',name:'274778-CAGUIOA.pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+  {id:'d268309',name:'268309.pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+  {id:'javier',name:'278353-JAVIER.pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+];
+const DOCS_A=[
+  {id:'uat',name:'UAT_Response_08_Branch_Clerk_rev.pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+  {id:'d274778',name:'274778.pdf',cat:'ncrim',catLabel:'non-criminal case · Land Registration Case',upl:'Uploaded by you'},
+  {id:'civil',name:'Civil Case No. 5814-17 Part a (1).pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+  {id:'caguioa2',name:'274778-CAGUIOA.pdf',cat:'crim',catLabel:'criminal case',upl:'Uploaded by you'},
+];
+let act={b:[],v:[]};
+
+function tpw(){const i=document.getElementById('lpw');i.type=i.type==='password'?'text':'password';}
+function doLogin(){
+  const email=document.getElementById('lemail').value.trim().toLowerCase();
+  const pw=document.getElementById('lpw').value;
+  const err=document.getElementById('lerr');
+  err.style.display='none';
+  if(!email||!pw){err.textContent='Please enter your email and password.';err.style.display='block';return;}
+  if(!CREDS[email]||CREDS[email]!==pw){err.style.display='block';return;}
+  const r=ROLES[email];
+  if(r==='b')go('b','chat');
+  else if(r==='v')go('v','chat');
+  else go('a','chat');
+}
+function logout(){show('lg');act={b:[],v:[]};document.getElementById('lemail').value='';document.getElementById('lpw').value='';document.getElementById('lerr').style.display='none';}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));const el=document.getElementById(id);if(el)el.classList.add('on');}
+function go(r,page){
+  show(r+'-'+page);
+  if(page==='lib')renderLib(r);
+  else if(page==='ins')renderIns(r);
+}
+function openM(id){document.getElementById(id).classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+function openPDF(name){document.getElementById('pdf-ttl').textContent='Preview: '+name;openM('m-pdf');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on');}));
+
+function renderLib(r){
+  const docs=r==='a'?DOCS_A:DOCS_B;
+  const g=document.getElementById(r+'-lgrid');if(!g)return;
+  const isAdv=r==='v'||r==='a';const isAdm=r==='a';
+  g.innerHTML=docs.map(d=>`<div class="lcard2" onclick="activateSrc(event,'${r}','${d.id}')">
+    <div class="lch">
+      <div class="picon">PDF</div>
+      <div style="flex:1"><div class="lcname">${d.name}</div><div class="lccat">${d.catLabel}</div><div class="lcupl">${d.upl}</div></div>
+      <span class="rbadge">Ready</span>
+    </div>
+    <div class="lactions">
+      <button class="ab" onclick="event.stopPropagation();openPDF('${d.name}')"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Preview</button>
+      <button class="ab" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download</button>
+      <button class="ab" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>Re-index</button>
+    </div>
+    ${isAdv?`<div class="more-actions" onclick="event.stopPropagation();this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>More Actions
+    </div>
+    <div class="lactions" style="display:none">
+      ${isAdm?`<button class="ab rep" onclick="event.stopPropagation();openM('m-editcat')"><svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>Full Reprocess (OCR)</button>
+      <button class="ab edt" onclick="event.stopPropagation();openM('m-editcat')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit Category</button>`:
+      `<button class="ab edt" onclick="event.stopPropagation();openM('m-editcat')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit Category</button>`}
+      <button class="ab del" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>Delete</button>
+    </div>`:''}
+    <div class="lhint">Drag to Active Sources in the sidebar to activate.</div>
+  </div>`).join('');
+}
+
+function activateSrc(e,r,id){
+  if(e.target.tagName==='BUTTON'||e.target.tagName==='SVG'||e.target.tagName==='PATH'||e.target.tagName==='POLYLINE')return;
+  if(!act[r])return;
+  const docs=r==='a'?DOCS_A:DOCS_B;
+  const doc=docs.find(d=>d.id===id);
+  if(!doc||act[r].find(s=>s.id===id))return;
+  act[r].push(doc);updateSrc(r);
+}
+function remSrc(r,id){if(!act[r])return;act[r]=act[r].filter(s=>s.id!==id);updateSrc(r);}
+function updateSrc(r){
+  const n=act[r]?act[r].length:0;
+  const cIds=r==='b'?['bc-cnt','bl-cnt']:['vc-cnt','vl-cnt'];
+  const sIds=r==='b'?['bc-src','bl-src']:['vc-src','vl-src'];
+  cIds.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=n;});
+  sIds.forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(!act[r]||n===0){el.innerHTML='<div class="src-drop">Drag files here from Library to activate them.</div>';return;}
+    el.innerHTML=act[r].map(s=>`<div class="src-item"><div class="sdot"></div><span>${s.name}</span><button class="xb" onclick="remSrc('${r}','${s.id}')">&#215;</button></div>`).join('');
+  });
+  const inp=document.getElementById(r+'-inp');
+  const btn=document.getElementById(r+'-snd');
+  const warn=document.getElementById(r+'-warn');
+  if(inp){inp.disabled=n===0;inp.placeholder=n>0?'Ask about selected case documents...':'Activate sources in sidebar to enable chat...';}
+  if(btn)btn.disabled=n===0;
+  if(warn)warn.style.display=n>0?'none':'block';
+}
+
+function renderIns(r){
+  const el=document.getElementById(r+'-ins-c');if(!el)return;
+  const isAdm=r==='a';
+  const n=isAdm?4:1;
+  el.innerHTML=`
+    <div class="ptitle">Document Insights</div>
+    <p class="psub">Deterministic corpus analytics generated from extracted document metadata in the current scope. These charts use structured SQL-backed fields, while the file list below lets clerks audit, approve, and correct each extracted label.</p>
+    <div class="sg4">
+      <div class="scard"><div class="slbl2">INDEXED LIBRARY FILES <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:var(--bl);fill:none;stroke-width:1.6"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg></div><div class="sval">${n}</div><div class="sdesc">${isAdm?'No active sources selected. Insights are using all indexed files in the library.':'Indexed files currently selected for this insight scope.'}</div></div>
+      <div class="scard"><div class="slbl2">ANALYZED FILES <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:var(--gr);fill:none;stroke-width:1.6"><path d="M2 12l4-4 3 3 5-6"/></svg></div><div class="sval">${n}</div><div class="sdesc">Indexed files whose metadata extraction completed successfully.</div></div>
+      <div class="scard"><div class="slbl2">SKIPPED FILES <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:var(--am);fill:none;stroke-width:1.6"><path d="M8 1l1.8 3.6L14 5.4l-3 2.9.7 4.1L8 10.4l-3.7 2 .7-4.1-3-2.9 4.2-.8z"/></svg></div><div class="sval">0</div><div class="sdesc">Indexed files that are not fully ready for metadata-based analysis yet.</div></div>
+      <div class="scard"><div class="slbl2">METADATA MISSING <svg viewBox="0 0 16 16" style="width:13px;height:13px;stroke:var(--p);fill:none;stroke-width:1.6"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M2 6h12M6 14V6"/></svg></div><div class="sval">${isAdm?1:0}</div><div class="sdesc">Indexed files that still do not have any extracted insights fields.</div></div>
+    </div>
+    <div class="sg3">
+      <div class="covcard"><div class="covlbl">COURT LEVEL COVERAGE</div><div class="covpct">${isAdm?'75%':'100%'}</div><div class="covsub">${isAdm?'3 / 4':'1 / 1'} indexed files</div></div>
+      <div class="covcard"><div class="covlbl">DECISION TYPE COVERAGE</div><div class="covpct">${isAdm?'75%':'0%'}</div><div class="covsub">${isAdm?'3 / 4':'0 / 1'} indexed files</div></div>
+      <div class="covcard"><div class="covlbl">PROMULGATION YEAR COVERAGE</div><div class="covpct">${isAdm?'75%':'100%'}</div><div class="covsub">${isAdm?'3 / 4':'1 / 1'} indexed files</div></div>
+    </div>
+    ${isAdm?`<div class="coverage-note"><strong>Coverage note</strong><br>1 indexed file(s) still do not have extracted court level, decision type, or promulgation year data.</div>`:''}
+    <div class="chcg">
+      <div class="chcard"><h3>Court Levels</h3><p class="chsub">Counts by extracted court level from document headers and OCR-tolerant matching.</p>
+        <div class="brow"><div class="blbl">Supreme Court</div><div class="btrack"><div class="bfill" style="width:${isAdm?'67':'100'}%"></div></div><span class="bcount">${isAdm?2:1}</span></div>
+        ${isAdm?'<div class="brow"><div class="blbl">RTC</div><div class="btrack"><div class="bfill am" style="width:33%"></div></div><span class="bcount">1</span></div>':''}
+      </div>
+      <div class="chcard"><h3>Decision Types</h3><p class="chsub">Counts by extracted document type, such as Decision, Resolution, or Order.</p>
+        ${isAdm?`<div class="donut-wrap">
+          <svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="36" fill="none" stroke="#E5E7EB" stroke-width="12"/><circle cx="45" cy="45" r="36" fill="none" stroke="#6C3AFF" stroke-width="12" stroke-dasharray="150 75" stroke-dashoffset="-38"/><circle cx="45" cy="45" r="36" fill="none" stroke="#F59E0B" stroke-width="12" stroke-dasharray="75 150" stroke-dashoffset="-188"/><text x="45" y="40" text-anchor="middle" font-size="9" font-weight="700" fill="#6B7280">TOTAL</text><text x="45" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#0F0D1A">3</text></svg>
+          <div><div class="donut-legend-item"><div class="dl-dot" style="background:var(--p)"></div><span class="dl-lbl">Decision</span><span class="dl-cnt">2</span></div><div class="donut-legend-item"><div class="dl-dot" style="background:var(--am)"></div><span class="dl-lbl">Order</span><span class="dl-cnt">1</span></div></div>
+        </div>`:'<div class="echrt">No extracted decision types available for the current scope.</div>'}
+      </div>
+      <div class="chcard"><h3>Promulgation Years</h3><p class="chsub">Counts by extracted promulgation year from the document text.</p>
+        ${isAdm?`<div style="padding:8px 0">
+          <div style="font-size:11px;color:var(--m);display:flex;justify-content:space-between;margin-bottom:14px"><span>2023</span><span>2025</span></div>
+          <div style="position:relative;height:2px;background:#E5E7EB;margin:0 8px 14px">
+            <div style="position:absolute;left:0;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--p);border:2px solid var(--p)"></div>
+            <div style="position:absolute;right:0;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--p);border:2px solid var(--p)"></div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="background:#F0EBFF;color:var(--pd);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600">2023 (1)</span>
+            <span style="background:#F0EBFF;color:var(--pd);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600">2025 (2)</span>
+          </div>
+        </div>`:`<div style="text-align:center;padding:16px 0"><div style="width:10px;height:10px;border-radius:50%;background:var(--p);margin:0 auto 6px"></div><div style="font-size:11px;color:var(--m)">2025 &middot; 1 file</div><div style="display:flex;gap:6px;justify-content:center;margin-top:10px"><span style="background:#F0EBFF;color:var(--pd);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600">2025 (1)</span></div></div>`}
+      </div>
+    </div>
+    <div class="lftbl">
+      <div class="lfhead"><h3>Labeled Files</h3><p>Audit the exact files in scope, review the extraction evidence, and approve or correct each field without leaving the dashboard.</p></div>
+      ${isAdm?`<div style="padding:12px 20px;border-bottom:1px solid var(--bd)"><div class="lf-filters">
+        <div class="lf-filter"><label>Confidence</label><select><option>Any Confidence</option><option>High</option><option>Low</option></select></div>
+        <div class="lf-filter"><label>Review Status</label><select><option>Any Review Status</option><option>Pending Review</option><option>Confirmed</option><option>Approved</option></select></div>
+      </div></div>`:''}
+      <div class="lfcnt">SHOWING ${n} OF ${n} FILES</div>
+      <table class="lft"><thead><tr><th style="width:30%">File</th><th style="width:18%">Court Level</th><th style="width:18%">Decision Type</th><th style="width:18%">Promulgation Year</th><th style="width:16%">Audit</th></tr></thead>
+      <tbody>${isAdm?`
+      <tr><td><div><a class="fname-link" onclick="openPDF('274778-CAGUIOA.pdf')"><svg viewBox="0 0 16 16"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg>274778-CAGUIOA.pdf</a></div><div style="margin-top:5px"><span class="ftag idx">Indexed</span><span class="ftag suc">Success</span><span class="ftag crim">criminal case</span></div></td>
+      <td><div>Supreme Court</div><div style="margin-top:4px"><span class="meta-badge mb-inf">Inferred</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M8 3l1.5 3 3.5.5-2.5 2.5.5 3.5L8 11l-3 1.5.5-3.5L3 6.5l3.5-.5z"/></svg></button></div></td>
+      <td><div>Decision</div><div style="margin-top:4px"><span class="meta-badge mb-aiinf">AI Inferred</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div>2025</div><div style="margin-top:4px"><span class="meta-badge mb-conf">Confirmed</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><button class="audbtn"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Audit</button></td></tr>
+      <tr><td><div><a class="fname-link" onclick="openPDF('274778.pdf')"><svg viewBox="0 0 16 16"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg>274778.pdf</a></div><div style="margin-top:5px"><span class="ftag idx">Indexed</span><span class="ftag suc">Success</span><span class="ftag ncrim">non-criminal case</span></div></td>
+      <td><div>Supreme Court</div><div style="margin-top:4px"><span class="meta-badge mb-inf">Inferred</span></div><div style="margin-top:3px"><span class="meta-badge mb-appr">&#10003; Approved</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div style="color:var(--m);font-size:11px">Unverified</div><div style="margin-top:4px"><span class="meta-badge mb-unver">Unverified</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div style="color:var(--m);font-size:11px">Unverified</div><div style="margin-top:4px"><span class="meta-badge mb-unver">Unverified</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><button class="audbtn"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Audit</button></td></tr>
+      <tr><td><div><a class="fname-link" onclick="openPDF('Civil Case No. 5814-17 Part a (1).pdf')"><svg viewBox="0 0 16 16"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg>Civil Case No. 5814-17...</a></div><div style="margin-top:5px"><span class="ftag idx">Indexed</span><span class="ftag suc">Success</span><span class="ftag crim">criminal case</span></div></td>
+      <td><div>Regional Trial Court</div><div style="margin-top:4px"><span class="meta-badge mb-conf">Confirmed</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div>Order</div><div style="margin-top:4px"><span class="meta-badge mb-aiinf">AI Inferred</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div>2023</div><div style="margin-top:4px"><span class="meta-badge mb-aiinf">AI Inferred</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M2 8l4 4 8-8"/></svg></button><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><button class="audbtn"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Audit</button></td></tr>
+      <tr><td><div><a class="fname-link"><svg viewBox="0 0 16 16"><path d="M3 2h7l3 3v9H3V2z"/><path d="M8 2v4h4"/></svg>UAT_Response_08_Branch...</a></div><div style="margin-top:5px"><span class="ftag idx">Indexed</span><span class="ftag suc">Success</span><span class="ftag crim">criminal case</span></div></td>
+      <td><div style="color:var(--m);font-size:11px">Not extracted</div><div style="margin-top:4px"><span class="meta-badge mb-nf">Not Found</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div style="color:var(--m);font-size:11px">Not extracted</div><div style="margin-top:4px"><span class="meta-badge mb-nf">Not Found</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><div style="color:var(--m);font-size:11px">Not extracted</div><div style="margin-top:4px"><span class="meta-badge mb-nf">Not Found</span></div><div style="margin-top:3px"><span class="meta-badge mb-pend">&#9711; Pending Review</span></div><div class="meta-actions"><button class="ma-btn"><svg viewBox="0 0 16 16"><path d="M13 2l1 1-9 9-4 1 1-4 9-9z"/></svg></button></div></td>
+      <td><button class="audbtn"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Audit</button></td></tr>`
+      :`<tr><td><span style="color:var(--p);font-size:12px;font-weight:600">274778-CAGUIOA.pdf</span><div style="margin-top:4px"><span class="ftag idx">Indexed</span><span class="ftag suc">Success</span><span class="ftag crim">criminal case</span></div></td><td><span class="meta-badge mb-conf">Supreme Court</span></td><td><span style="color:var(--m);font-size:11px">—</span></td><td><span class="meta-badge mb-conf">2025</span></td><td><button class="audbtn">Audit</button></td></tr>`}
+      </tbody></table>
+    </div>`;
+}
+
+function sendMsg(r){
+  const inp=document.getElementById(r+'-inp');
+  const q=inp.value.trim();if(!q)return;inp.value='';
+  const c=document.getElementById(r+'-msgs');
+  const w=document.getElementById(r+'-welcome');if(w)w.style.display='none';
+  const sq=c.querySelector('.suggested-wrap');if(sq)sq.style.display='none';
+  c.innerHTML+=`<div class="msg-user-wrap"><div class="msg-user">${q}</div></div>`;
+  c.innerHTML+=`<div class="msg-ai-wrap"><div class="msg-ai">
+    The main petitioners in this case are:<br><br>
+    - AQUILINO PIMENTEL III<br>- ERNESTO OFRACIO<br>- JUNICE LIRZA MELGAR<br>- MARIA CIELO MAGNO<br>- MA. DOMINGA CECILIA B. PADILLA<br>- DANTE B. GATMAYTAN<br>- IBARRA M. GUTIERREZ<br><br>
+    The main respondents are:<br><br>
+    - HOUSE OF REPRESENTATIVES, represented by Speaker FERDINAND MARTIN ROMUALDEZ<br>- SENATE OF THE REPUBLIC OF THE PHILIPPINES, represented by Senate President FRANCIS ESCUDERO<br>- DEPARTMENT OF FINANCE SECRETARY RALPH RECTO<br>- EXECUTIVE SECRETARY LUCAS P. BERSAMIN<br>- PHILIPPINE HEALTH INSURANCE CORPORATION, represented by its President, EMMANUEL R. LEDESMA, JR.
+    <div class="msg-ai-meta"><div class="meta-dot"></div>OpenAI · GPT-4o-mini</div>
+    <div class="sources-wrap">
+      <div class="sources-lbl">Sources</div>
+      <div class="src-chip-row"><div class="src-chip-top"><div class="src-chip-name"><svg viewBox="0 0 16 16" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8"><path d="M3 2h8l3 3v9H3V2z"/><path d="M9 2v4h4"/></svg>274778-CAGUIOA.pdf</div><div style="display:flex;align-items:center;gap:6px"><span class="src-chip-pg">p. 1</span><span class="rel-badge">Relevant Source</span></div></div><div class="src-chip-snippet">DANILO ISIDERIO, FFW Legal Center, Petitioners-in-Intervention, v. HOUSE OF REPRESENTATIVES, represented by the Speaker, FERDINAND MARTIN ROMUALDEZ; SENATE OF THE REPUBLIC...</div></div>
+    </div>
+  </div></div>
+  <div class="suggested-wrap"><div class="sug-row">
+    <div class="sug-lbl"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a6 6 0 016 6c0 2-1 3.5-2 5H8c-1-1.5-2-3-2-5a6 6 0 016-6z"/></svg>SUGGESTED</div>
+    <button class="sug-btn" onclick="document.getElementById('${r}-inp').value=this.textContent.trim()">What is the primary legal issue being addressed in G.R. No. 274778?</button>
+    <button class="sug-btn" onclick="document.getElementById('${r}-inp').value=this.textContent.trim()">What specific decision or ruling did the Supreme Court make in this en banc case?</button>
+  </div></div>`;
+  c.scrollTop=c.scrollHeight;
+}
+function fillQ(r,btn){document.getElementById(r+'-inp').value=btn.textContent.trim();}
+function selTab(el,cat,r){document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderLib(r);}
+function atab(tab,el){
+  document.querySelectorAll('.tbtab').forEach(t=>t.classList.remove('on'));el.classList.add('on');
+  document.getElementById('ap-usr').style.display=tab==='usr'?'block':'none';
+  document.getElementById('ap-log').style.display=tab==='log'?'block':'none';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const cur=document.querySelector('.screen.on');if(!cur)return;
+  if(cur.id.endsWith('-chat')){const r=cur.id[0];if(['b','v','a'].includes(r))sendMsg(r);}
+});
+renderLib('b');renderLib('v');renderLib('a');
+renderIns('b');renderIns('v');renderIns('a');
+</script>
+</body>
+</html>
