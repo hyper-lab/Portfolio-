@@ -3,128 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Zion's developer portfolio — projects, skills, and contact." />
+  <meta name="description" content="Zion — Developer portfolio. Projects, skills, and ways to get in touch." />
+  <meta name="theme-color" content="#0b0d12" />
   <title>Zion — Developer Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="bg-mesh" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
   <header class="site-header">
     <nav class="nav container">
-      <a href="#top" class="logo">Zion<span class="dot">.</span></a>
-      <ul class="nav-links">
+      <a href="#top" class="logo">
+        <span class="logo-mark">Z</span>
+        <span class="logo-text">zion<span class="dot">.</span>dev</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun"  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </nav>
   </header>
 
   <main id="top">
+    <!-- HERO -->
     <section class="hero container">
-      <div class="hero-text">
-        <p class="eyebrow">Hi, I'm</p>
-        <h1>Zion <span class="wave">👋</span></h1>
-        <h2 class="tagline">Developer building things for the web.</h2>
+      <div class="hero-text reveal">
+        <span class="badge"><span class="pulse"></span> Available for work</span>
+        <h1>
+          Building <span class="grad">delightful</span><br />
+          things for the web.
+        </h1>
         <p class="lead">
-          I design and ship clean, fast, and accessible software.
-          Currently focused on <strong>web development</strong> and
-          open-source projects.
+          I'm <strong>Zion</strong> — a developer who cares about clean code,
+          fast experiences, and pixel-precise UI. Currently exploring
+          <em>web development</em> &amp; open-source.
         </p>
         <div class="cta">
-          <a href="#projects" class="btn btn-primary">View my work</a>
-          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          <a href="#projects" class="btn btn-primary">
+            See my work
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Contact me</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>10+</strong><span>Projects shipped</span></div>
+          <div class="stat"><strong>3+</strong><span>Years coding</span></div>
+          <div class="stat"><strong>∞</strong><span>Cups of coffee</span></div>
         </div>
       </div>
-      <div class="hero-card" aria-hidden="true">
-        <pre><code>const zion = {
-  role: "Developer",
-  stack: ["JavaScript", "HTML", "CSS"],
-  learning: "Always",
-  open_to_work: true,
-};</code></pre>
+
+      <div class="hero-card reveal" aria-hidden="true">
+        <div class="window-bar">
+          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+          <span class="window-title">zion.js</span>
+        </div>
+<pre><code><span class="kw">const</span> <span class="var">zion</span> = {
+  <span class="prop">role</span>: <span class="str">"Developer"</span>,
+  <span class="prop">stack</span>: [<span class="str">"JavaScript"</span>, <span class="str">"HTML"</span>, <span class="str">"CSS"</span>],
+  <span class="prop">learning</span>: <span class="str">"every day"</span>,
+  <span class="prop">openToWork</span>: <span class="bool">true</span>,
+};
+
+<span class="fn">zion</span>.<span class="fn">build</span>(<span class="str">"something cool"</span>);</code></pre>
       </div>
     </section>
 
+    <!-- ABOUT -->
     <section id="about" class="section container">
-      <h2 class="section-title">About</h2>
-      <p>
-        Short intro paragraph — replace this with your story. Mention your
-        background, what you love building, and what you're looking for.
-        Keep it to 3–5 sentences.
-      </p>
+      <div class="section-head reveal">
+        <span class="kicker">01 — About</span>
+        <h2 class="section-title">A bit about me</h2>
+      </div>
+      <div class="about-grid reveal">
+        <p class="about-text">
+          I'm a developer who loves turning ideas into well-crafted products.
+          My focus is on the front-end: clean markup, expressive CSS, and
+          interactions that feel right. I care a lot about accessibility,
+          performance, and writing code that's easy for the next person to read.
+        </p>
+        <p class="about-text muted">
+          Off the keyboard, I'm probably reading, exploring new tools,
+          or shipping side projects to learn the next thing. Always open to
+          collaboration and a good challenge.
+        </p>
+      </div>
     </section>
 
+    <!-- SKILLS -->
     <section id="skills" class="section container">
-      <h2 class="section-title">Skills</h2>
-      <ul class="skills">
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JavaScript</li>
-        <li>Git &amp; GitHub</li>
-        <li>Responsive Design</li>
-        <li>Accessibility</li>
-      </ul>
+      <div class="section-head reveal">
+        <span class="kicker">02 — Toolkit</span>
+        <h2 class="section-title">What I work with</h2>
+      </div>
+      <div class="skill-cards reveal">
+        <div class="skill-card">
+          <div class="skill-icon">⚡</div>
+          <h3>Frontend</h3>
+          <p>HTML, CSS, JavaScript, responsive layouts, modern animations.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3>Design</h3>
+          <p>Clean UI, type systems, color theory, attention to spacing.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🛠</div>
+          <h3>Tooling</h3>
+          <p>Git, GitHub, VS Code, terminal workflows, deployment to Pages.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">♿</div>
+          <h3>A11y &amp; Perf</h3>
+          <p>Semantic HTML, keyboard navigation, performance budgets.</p>
+        </div>
+      </div>
     </section>
 
+    <!-- PROJECTS -->
     <section id="projects" class="section container">
-      <h2 class="section-title">Projects</h2>
+      <div class="section-head reveal">
+        <span class="kicker">03 — Work</span>
+        <h2 class="section-title">Selected projects</h2>
+      </div>
+
       <div class="project-grid">
-        <article class="project-card">
-          <h3>Project One</h3>
-          <p>Short description of what this project does and the problem it solves.</p>
-          <div class="tags">
-            <span>HTML</span><span>CSS</span><span>JS</span>
+        <article class="project-card reveal">
+          <div class="project-thumb thumb-1">
+            <span class="project-num">01</span>
           </div>
-          <div class="project-links">
-            <a href="#" target="_blank" rel="noopener">Live demo</a>
-            <a href="#" target="_blank" rel="noopener">Source</a>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <h3>Project Two</h3>
-          <p>Short description of what this project does and the problem it solves.</p>
-          <div class="tags">
-            <span>JavaScript</span><span>API</span>
-          </div>
-          <div class="project-links">
-            <a href="#" target="_blank" rel="noopener">Live demo</a>
-            <a href="#" target="_blank" rel="noopener">Source</a>
+          <div class="project-body">
+            <h3>Project One</h3>
+            <p>Short description of what this project does and the problem it solves.</p>
+            <div class="tags">
+              <span>HTML</span><span>CSS</span><span>JS</span>
+            </div>
+            <div class="project-links">
+              <a href="#" target="_blank" rel="noopener">
+                Live demo
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+              <a href="#" target="_blank" rel="noopener">Source</a>
+            </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <h3>Project Three</h3>
-          <p>Short description of what this project does and the problem it solves.</p>
-          <div class="tags">
-            <span>Frontend</span><span>UI</span>
+        <article class="project-card reveal">
+          <div class="project-thumb thumb-2">
+            <span class="project-num">02</span>
           </div>
-          <div class="project-links">
-            <a href="#" target="_blank" rel="noopener">Live demo</a>
-            <a href="#" target="_blank" rel="noopener">Source</a>
+          <div class="project-body">
+            <h3>Project Two</h3>
+            <p>Short description of what this project does and the problem it solves.</p>
+            <div class="tags">
+              <span>JavaScript</span><span>API</span>
+            </div>
+            <div class="project-links">
+              <a href="#" target="_blank" rel="noopener">
+                Live demo
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+              <a href="#" target="_blank" rel="noopener">Source</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-thumb thumb-3">
+            <span class="project-num">03</span>
+          </div>
+          <div class="project-body">
+            <h3>Project Three</h3>
+            <p>Short description of what this project does and the problem it solves.</p>
+            <div class="tags">
+              <span>Frontend</span><span>UI</span>
+            </div>
+            <div class="project-links">
+              <a href="#" target="_blank" rel="noopener">
+                Live demo
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+              <a href="#" target="_blank" rel="noopener">Source</a>
+            </div>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="section container">
-      <h2 class="section-title">Contact</h2>
-      <p>
-        Want to work together or just say hi? Reach out:
-      </p>
-      <ul class="contact-list">
-        <li><a href="mailto:casepoint20252026@gmail.com">casepoint20252026@gmail.com</a></li>
-        <li><a href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a></li>
-      </ul>
+      <div class="contact-card reveal">
+        <span class="kicker">04 — Contact</span>
+        <h2 class="contact-title">Let's build something together.</h2>
+        <p class="contact-sub">Open for freelance work, collaborations, and conversations.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:casepoint20252026@gmail.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+            Send a message
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5 3.3 9.3 7.8 10.8.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.8 2.5 1.5 3.1.1.7.4 1.2.7 1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.8C23.5 5.7 18.3.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3zm-1.5-11.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-5c0-1.2-.4-2-1.5-2-.8 0-1.3.5-1.5 1.1V19h-3V9h3v1.3a3 3 0 0 1 2.7-1.5c2 0 3.3 1.3 3.3 4z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> Zion. Built with HTML, CSS &amp; JS.</p>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Zion · Built with HTML, CSS &amp; JS</p>
+      <a href="#top" class="back-top">Back to top ↑</a>
     </div>
   </footer>
 
