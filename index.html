@@ -3,181 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Zion Cesar Panitan — Developer. Selected work, background, and contact." />
-  <meta name="theme-color" content="#0a0e15" />
-  <title>Zion Cesar Panitan — Developer</title>
+  <meta name="description" content="Zion Cesar Panitan — Developer & UI designer. Selected work, background, and contact." />
+  <meta name="theme-color" content="#f4efe3" />
+  <title>Zion Cesar Panitan — Developer &amp; UI Designer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav container">
-      <a href="#top" class="logo">Zion Panitan</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">ZP</span>
+        <span class="brand-text">Zion Panitan</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#now">Now</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
       <div class="nav-actions">
         <button class="theme-toggle" aria-label="Toggle theme">
-          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         </button>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
+          <span></span><span></span>
         </button>
       </div>
-    </nav>
+    </div>
   </header>
 
   <main id="top">
     <!-- HERO -->
-    <section class="hero container">
-      <p class="hero-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Open for work
-      </p>
-      <h1 class="hero-title">
-        Zion Cesar<br />Panitan.
-      </h1>
-      <p class="hero-statement">
-        Developer building small, useful web tools. I focus on clean front-end work and care about the details — readable code, careful typography, and interfaces that get out of the user's way.
-      </p>
-      <p class="hero-detail">
-        Most recently shipped <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">CasePoint</a> — a high-fidelity prototype for legal document Q&amp;A with grounded citations.
-      </p>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-eyebrow">
+          <span class="eyebrow-rule" aria-hidden="true"></span>
+          <span>Developer &amp; UI Designer · Based in the Philippines</span>
+        </p>
+
+        <h1 class="hero-title">
+          Designing &amp;<br />
+          building thoughtful<br />
+          web&nbsp;experiences.
+        </h1>
+
+        <div class="hero-foot">
+          <p class="hero-statement">
+            I'm Zion — I design and ship small, considered web tools. Most of my work lives at the intersection of clean front-end engineering and careful interaction design.
+          </p>
+          <a class="hero-cta" href="#work">
+            <span>View selected work</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
     </section>
 
-    <!-- WORK -->
-    <section id="work" class="section container">
-      <header class="section-head">
-        <h2 class="section-title">Work</h2>
-        <span class="section-meta">Selected — 2024 / 2025</span>
-      </header>
+    <!-- FEATURED WORK -->
+    <section id="work" class="featured">
+      <div class="container">
+        <div class="section-rule"><span>Featured</span><i></i></div>
 
-      <article class="work-featured">
-        <a class="work-image" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" aria-label="Open CasePoint live demo">
-          <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
-        </a>
-        <div class="work-body">
-          <div class="work-meta">
-            <span>2025</span>
-            <span class="dot-sep" aria-hidden="true">·</span>
-            <span>Prototype</span>
-          </div>
-          <h3 class="work-title">CasePoint</h3>
-          <p class="work-desc">
-            A legal RAG platform with semantic search, grounded citations, role-based access (Basic / Advanced / Admin), document insights dashboards, and dual-model support for OpenAI and Ollama. Designed around the principle that an AI answer is incomplete without its source.
-          </p>
-          <ul class="work-tags">
-            <li>RAG</li>
-            <li>UI/UX</li>
-            <li>JavaScript</li>
-            <li>Prototype</li>
-          </ul>
-          <div class="work-links">
-            <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">Live demo →</a>
-            <a href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">Source</a>
-          </div>
-        </div>
-      </article>
+        <article class="case">
+          <a class="case-media" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" aria-label="Open CasePoint live demo">
+            <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
+          </a>
 
-      <p class="work-coming">More work in progress — check back soon.</p>
+          <div class="case-info">
+            <h2 class="case-title">CasePoint</h2>
+            <p class="case-tagline">A legal-research RAG platform with grounded citations &amp; role-based access.</p>
+
+            <p class="case-body">
+              CasePoint helps legal staff search and reason across case files. Every AI answer is paired with the exact passage and page it came from, so an answer is never a black box. The system supports role-based access (Basic, Advanced, Admin), document insights, statistical reports, and a choice between OpenAI and a local Ollama model for privacy-sensitive queries.
+            </p>
+
+            <dl class="case-facts">
+              <div><dt>Role</dt><dd>Design &amp; Front-end</dd></div>
+              <div><dt>Year</dt><dd>2025</dd></div>
+              <div><dt>Type</dt><dd>High-fidelity prototype</dd></div>
+              <div><dt>Stack</dt><dd>HTML · CSS · JavaScript</dd></div>
+              <div><dt>Theme</dt><dd>RAG · Legal-tech</dd></div>
+              <div><dt>Status</dt><dd>Live</dd></div>
+            </dl>
+
+            <div class="case-actions">
+              <a class="link-arrow" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">
+                Visit live site
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+              <a class="link-arrow muted" href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">
+                View source
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- INDEX OF WORK -->
+    <section class="works-index">
+      <div class="container">
+        <div class="section-rule"><span>Index</span><i></i></div>
+
+        <ol class="work-table" role="list">
+          <li class="work-row work-row-head" aria-hidden="true">
+            <span class="col-num">№</span>
+            <span class="col-title">Project</span>
+            <span class="col-type">Type</span>
+            <span class="col-year">Year</span>
+            <span class="col-link">↗</span>
+          </li>
+
+          <li class="work-row">
+            <span class="col-num">01</span>
+            <a class="col-title" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">CasePoint</a>
+            <span class="col-type">Legal RAG · UI</span>
+            <span class="col-year">2025</span>
+            <a class="col-link" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" aria-label="Visit CasePoint">↗</a>
+          </li>
+
+          <li class="work-row work-row-soon">
+            <span class="col-num">02</span>
+            <span class="col-title">In progress</span>
+            <span class="col-type">—</span>
+            <span class="col-year">2025</span>
+            <span class="col-link">—</span>
+          </li>
+
+          <li class="work-row work-row-soon">
+            <span class="col-num">03</span>
+            <span class="col-title">In progress</span>
+            <span class="col-type">—</span>
+            <span class="col-year">2025</span>
+            <span class="col-link">—</span>
+          </li>
+        </ol>
+      </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="section container">
-      <header class="section-head">
-        <h2 class="section-title">About</h2>
-      </header>
-      <div class="about-cols">
+    <section id="about" class="about">
+      <div class="container about-grid">
+        <div class="section-rule"><span>About</span><i></i></div>
+
         <div class="about-bio">
-          <p>
-            I'm a developer who likes clean code, fast experiences, and interactions that feel intentional. Most of my time goes into the front-end — markup, CSS, and the small bits of JavaScript that make a page feel alive.
+          <p class="about-lead">
+            I'm a developer who likes clean code, fast experiences, and interactions that feel intentional — small details that make a product feel cared for.
           </p>
           <p>
-            Lately I've been thinking about how AI can support real workflows without getting in the user's way. CasePoint is one expression of that idea: an answer is only useful when it cites its source.
+            My focus is the front-end: HTML, CSS, and the precise bits of JavaScript that make pages feel alive without becoming brittle. I spend a lot of time on the basics — typography, spacing, motion — because that's where most of the perceived quality comes from.
           </p>
-          <p class="muted">
-            Always open to interesting collaborations and good problems.
+          <p>
+            Lately I've been thinking about how AI can support real workflows without getting in the user's way. CasePoint is one expression of that idea: an answer is only useful when you can trace it back to its source.
           </p>
         </div>
+
         <aside class="about-side">
-          <dl class="facts">
-            <div><dt>Stack</dt><dd>HTML · CSS · JavaScript</dd></div>
-            <div><dt>Tools</dt><dd>Git · VS Code · Figma</dd></div>
-            <div><dt>Currently</dt><dd>Exploring RAG &amp; legal-tech</dd></div>
-            <div><dt>Status</dt><dd>Open for select work</dd></div>
-          </dl>
+          <div class="side-block">
+            <h3>Selected facts</h3>
+            <dl>
+              <div><dt>Discipline</dt><dd>Front-end &amp; UI design</dd></div>
+              <div><dt>Stack</dt><dd>HTML · CSS · JavaScript</dd></div>
+              <div><dt>Tools</dt><dd>VS Code · Figma · Git</dd></div>
+              <div><dt>Interests</dt><dd>RAG, legal-tech, typography</dd></div>
+            </dl>
+          </div>
+
+          <div class="side-block">
+            <h3>Currently</h3>
+            <p>Open for select front-end &amp; UI work. Best reached by email.</p>
+          </div>
         </aside>
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section container">
-      <header class="section-head">
-        <h2 class="section-title">Experience</h2>
-      </header>
-      <ol class="entries">
-        <li class="entry">
-          <div class="entry-date">2025 — Now</div>
-          <div class="entry-body">
-            <h3>Freelance Developer</h3>
-            <p class="entry-org">Self-employed</p>
-            <p>Building responsive websites and small web apps for clients. Focused on clean front-end work and a smooth handoff.</p>
+    <!-- NOW -->
+    <section id="now" class="now">
+      <div class="container">
+        <div class="section-rule"><span>Now</span><i></i></div>
+
+        <div class="now-grid">
+          <div>
+            <h3 class="now-heading">What I'm working on</h3>
+            <p>Polishing CasePoint and exploring how to evaluate retrieval quality on Filipino legal text — where layout and language make off-the-shelf RAG fall short.</p>
           </div>
-        </li>
-        <li class="entry">
-          <div class="entry-date">2024</div>
-          <div class="entry-body">
-            <h3>Open-source contributor</h3>
-            <p class="entry-org">GitHub community</p>
-            <p>Bug fixes, documentation, and small features across a handful of repos. Got comfortable with code review and shipping in public.</p>
+          <div>
+            <h3 class="now-heading">What I'm reading</h3>
+            <p>Writing on retrieval-augmented generation, evaluation harnesses for LLMs, and the design language of editorial websites.</p>
           </div>
-        </li>
-        <li class="entry">
-          <div class="entry-date">2023</div>
-          <div class="entry-body">
-            <h3>Started learning web dev</h3>
-            <p class="entry-org">Self-taught</p>
-            <p>Picked up HTML, CSS, and JavaScript through small projects — internalising the fundamentals before reaching for frameworks.</p>
+          <div>
+            <h3 class="now-heading">What I'm learning</h3>
+            <p>Going deeper into Python and the practical side of vector search, plus continuing to refine my sense of typography on the web.</p>
           </div>
-        </li>
-      </ol>
+        </div>
+      </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section container">
-      <header class="section-head">
-        <h2 class="section-title">Contact</h2>
-      </header>
-      <p class="contact-lead">The fastest way to reach me is email — usually a reply within a day or two.</p>
-      <ul class="contact-links">
-        <li>
-          <span class="contact-key">Email</span>
-          <a href="mailto:zionpanitan44@gmail.com">zionpanitan44@gmail.com</a>
-        </li>
-        <li>
-          <span class="contact-key">GitHub</span>
-          <a href="https://github.com/hyper-lab" target="_blank" rel="noopener">github.com/hyper-lab</a>
-        </li>
-        <li>
-          <span class="contact-key">LinkedIn</span>
-          <a href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">linkedin.com/in/YOUR-HANDLE</a>
-        </li>
-      </ul>
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-rule"><span>Contact</span><i></i></div>
+
+        <div class="contact-grid">
+          <div>
+            <h2 class="contact-headline">
+              Have a project in mind,<br />
+              or just want to say hi?
+            </h2>
+            <p class="contact-sub">
+              Email is the fastest way to reach me. I usually reply within a day or two.
+            </p>
+          </div>
+
+          <ul class="contact-table">
+            <li>
+              <span class="ck">Email</span>
+              <a href="mailto:zionpanitan44@gmail.com">zionpanitan44@gmail.com</a>
+            </li>
+            <li>
+              <span class="ck">GitHub</span>
+              <a href="https://github.com/hyper-lab" target="_blank" rel="noopener">github.com/hyper-lab ↗</a>
+            </li>
+            <li>
+              <span class="ck">LinkedIn</span>
+              <a href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">linkedin.com/in/YOUR-HANDLE ↗</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Zion Cesar Panitan</p>
-      <a href="#top" class="back-top">Top ↑</a>
+    <div class="container footer-grid">
+      <div class="foot-col foot-col-brand">
+        <p class="foot-name">Zion Cesar Panitan</p>
+        <p class="foot-role">Developer &amp; UI Designer</p>
+      </div>
+      <div class="foot-col">
+        <h4>Sitemap</h4>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#now">Now</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://github.com/hyper-lab" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:zionpanitan44@gmail.com">Email</a></li>
+        </ul>
+      </div>
+      <div class="foot-col foot-col-meta">
+        <p>© <span id="year"></span> Zion Cesar Panitan</p>
+        <p class="foot-tag">Designed &amp; coded by hand.</p>
+      </div>
     </div>
   </footer>
 
