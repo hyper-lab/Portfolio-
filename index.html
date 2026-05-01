@@ -3,37 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Zion — Developer portfolio. Projects, skills, and ways to get in touch." />
-  <meta name="theme-color" content="#08101a" />
-  <title>Zion — Developer Portfolio</title>
+  <meta name="description" content="Zion Cesar Panitan — Developer. Selected work, background, and contact." />
+  <meta name="theme-color" content="#0a0e15" />
+  <title>Zion Cesar Panitan — Developer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="bg-mesh" aria-hidden="true"></div>
-  <div class="bg-grid" aria-hidden="true"></div>
-
   <header class="site-header">
     <nav class="nav container">
-      <a href="#top" class="logo">
-        <span class="logo-mark">Z</span>
-        <span class="logo-text">zion<span class="dot">.</span>dev</span>
-      </a>
+      <a href="#top" class="logo">Zion Panitan</a>
       <ul class="nav-links" id="navLinks">
+        <li><a href="#work">Work</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="nav-actions">
         <button class="theme-toggle" aria-label="Toggle theme">
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun"  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         </button>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -45,267 +38,146 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero container">
-      <div class="hero-text reveal">
-        <span class="badge"><span class="pulse"></span> Available for work</span>
-        <h1>
-          Building <span class="grad">delightful</span><br />
-          things for the web.
-        </h1>
-        <p class="lead">
-          I'm <strong>Zion</strong> — a developer who cares about clean code,
-          fast experiences, and pixel-precise UI. Currently exploring
-          <em>web development</em> &amp; open-source.
-        </p>
-        <div class="cta">
-          <a href="#projects" class="btn btn-primary">
-            See my work
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#contact" class="btn btn-ghost">Contact me</a>
-        </div>
+      <p class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Open for work
+      </p>
+      <h1 class="hero-title">
+        Zion Cesar<br />Panitan.
+      </h1>
+      <p class="hero-statement">
+        Developer building small, useful web tools. I focus on clean front-end work and care about the details — readable code, careful typography, and interfaces that get out of the user's way.
+      </p>
+      <p class="hero-detail">
+        Most recently shipped <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">CasePoint</a> — a high-fidelity prototype for legal document Q&amp;A with grounded citations.
+      </p>
+    </section>
 
-        <div class="stats">
-          <div class="stat"><strong>10+</strong><span>Projects shipped</span></div>
-          <div class="stat"><strong>3+</strong><span>Years coding</span></div>
-          <div class="stat"><strong>∞</strong><span>Cups of coffee</span></div>
-        </div>
-      </div>
+    <!-- WORK -->
+    <section id="work" class="section container">
+      <header class="section-head">
+        <h2 class="section-title">Work</h2>
+        <span class="section-meta">Selected — 2024 / 2025</span>
+      </header>
 
-      <div class="hero-card reveal" aria-hidden="true">
-        <div class="window-bar">
-          <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
-          <span class="window-title">zion.js</span>
+      <article class="work-featured">
+        <a class="work-image" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" aria-label="Open CasePoint live demo">
+          <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
+        </a>
+        <div class="work-body">
+          <div class="work-meta">
+            <span>2025</span>
+            <span class="dot-sep" aria-hidden="true">·</span>
+            <span>Prototype</span>
+          </div>
+          <h3 class="work-title">CasePoint</h3>
+          <p class="work-desc">
+            A legal RAG platform with semantic search, grounded citations, role-based access (Basic / Advanced / Admin), document insights dashboards, and dual-model support for OpenAI and Ollama. Designed around the principle that an AI answer is incomplete without its source.
+          </p>
+          <ul class="work-tags">
+            <li>RAG</li>
+            <li>UI/UX</li>
+            <li>JavaScript</li>
+            <li>Prototype</li>
+          </ul>
+          <div class="work-links">
+            <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">Live demo →</a>
+            <a href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">Source</a>
+          </div>
         </div>
-<pre><code><span class="kw">const</span> <span class="var">zion</span> = {
-  <span class="prop">role</span>: <span class="str">"Developer"</span>,
-  <span class="prop">stack</span>: [<span class="str">"JavaScript"</span>, <span class="str">"HTML"</span>, <span class="str">"CSS"</span>],
-  <span class="prop">learning</span>: <span class="str">"every day"</span>,
-  <span class="prop">openToWork</span>: <span class="bool">true</span>,
-};
+      </article>
 
-<span class="fn">zion</span>.<span class="fn">build</span>(<span class="str">"something cool"</span>);</code></pre>
-      </div>
+      <p class="work-coming">More work in progress — check back soon.</p>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="section container">
-      <div class="section-head reveal">
-        <span class="kicker">01 — About</span>
-        <h2 class="section-title">A bit about me</h2>
-      </div>
-      <div class="about-grid reveal">
-        <p class="about-text">
-          I'm a developer who loves turning ideas into well-crafted products.
-          My focus is on the front-end: clean markup, expressive CSS, and
-          interactions that feel right. I care a lot about accessibility,
-          performance, and writing code that's easy for the next person to read.
-        </p>
-        <p class="about-text muted">
-          Off the keyboard, I'm probably reading, exploring new tools,
-          or shipping side projects to learn the next thing. Always open to
-          collaboration and a good challenge.
-        </p>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section container">
-      <div class="section-head reveal">
-        <span class="kicker">02 — Toolkit</span>
-        <h2 class="section-title">What I work with</h2>
-      </div>
-      <div class="skill-cards reveal">
-        <div class="skill-card">
-          <div class="skill-icon">⚡</div>
-          <h3>Frontend</h3>
-          <p>HTML, CSS, JavaScript, responsive layouts, modern animations.</p>
+      <header class="section-head">
+        <h2 class="section-title">About</h2>
+      </header>
+      <div class="about-cols">
+        <div class="about-bio">
+          <p>
+            I'm a developer who likes clean code, fast experiences, and interactions that feel intentional. Most of my time goes into the front-end — markup, CSS, and the small bits of JavaScript that make a page feel alive.
+          </p>
+          <p>
+            Lately I've been thinking about how AI can support real workflows without getting in the user's way. CasePoint is one expression of that idea: an answer is only useful when it cites its source.
+          </p>
+          <p class="muted">
+            Always open to interesting collaborations and good problems.
+          </p>
         </div>
-        <div class="skill-card">
-          <div class="skill-icon">🎨</div>
-          <h3>Design</h3>
-          <p>Clean UI, type systems, color theory, attention to spacing.</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🛠</div>
-          <h3>Tooling</h3>
-          <p>Git, GitHub, VS Code, terminal workflows, deployment to Pages.</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">♿</div>
-          <h3>A11y &amp; Perf</h3>
-          <p>Semantic HTML, keyboard navigation, performance budgets.</p>
-        </div>
+        <aside class="about-side">
+          <dl class="facts">
+            <div><dt>Stack</dt><dd>HTML · CSS · JavaScript</dd></div>
+            <div><dt>Tools</dt><dd>Git · VS Code · Figma</dd></div>
+            <div><dt>Currently</dt><dd>Exploring RAG &amp; legal-tech</dd></div>
+            <div><dt>Status</dt><dd>Open for select work</dd></div>
+          </dl>
+        </aside>
       </div>
     </section>
 
-    <!-- EXPERIENCE / TIMELINE -->
+    <!-- EXPERIENCE -->
     <section id="experience" class="section container">
-      <div class="section-head reveal">
-        <span class="kicker">03 — Journey</span>
-        <h2 class="section-title">Experience &amp; milestones</h2>
-      </div>
-
-      <ol class="timeline">
-        <li class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2025 — Present</span>
+      <header class="section-head">
+        <h2 class="section-title">Experience</h2>
+      </header>
+      <ol class="entries">
+        <li class="entry">
+          <div class="entry-date">2025 — Now</div>
+          <div class="entry-body">
             <h3>Freelance Developer</h3>
-            <p class="timeline-org">Self-employed</p>
-            <p>Building responsive websites and small web apps for clients. Focused on clean, performant front-end work and a pleasant developer-to-client handoff.</p>
+            <p class="entry-org">Self-employed</p>
+            <p>Building responsive websites and small web apps for clients. Focused on clean front-end work and a smooth handoff.</p>
           </div>
         </li>
-
-        <li class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2024</span>
-            <h3>Open Source Contributor</h3>
-            <p class="timeline-org">GitHub community</p>
-            <p>Contributed bug fixes, documentation, and small features to several open-source repos. Learned the rhythm of code review and shipping in public.</p>
+        <li class="entry">
+          <div class="entry-date">2024</div>
+          <div class="entry-body">
+            <h3>Open-source contributor</h3>
+            <p class="entry-org">GitHub community</p>
+            <p>Bug fixes, documentation, and small features across a handful of repos. Got comfortable with code review and shipping in public.</p>
           </div>
         </li>
-
-        <li class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2023</span>
-            <h3>Started learning web development</h3>
-            <p class="timeline-org">Self-taught</p>
-            <p>Picked up HTML, CSS, and JavaScript. Built dozens of small projects to internalize the fundamentals before reaching for frameworks.</p>
+        <li class="entry">
+          <div class="entry-date">2023</div>
+          <div class="entry-body">
+            <h3>Started learning web dev</h3>
+            <p class="entry-org">Self-taught</p>
+            <p>Picked up HTML, CSS, and JavaScript through small projects — internalising the fundamentals before reaching for frameworks.</p>
           </div>
         </li>
       </ol>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="section container">
-      <div class="section-head reveal">
-        <span class="kicker">04 — Work</span>
-        <h2 class="section-title">Selected projects</h2>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card reveal">
-          <div class="project-thumb has-image">
-            <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
-            <span class="project-num project-num-badge">01</span>
-          </div>
-          <div class="project-body">
-            <h3>CasePoint</h3>
-            <p>High-fidelity prototype of a legal RAG platform — semantic search with grounded citations, role-based access (Basic / Advanced / Admin), document insights dashboard, and dual-model support (OpenAI &amp; Ollama).</p>
-            <div class="tags">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>RAG</span><span>UI/UX</span>
-            </div>
-            <div class="project-links">
-              <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">
-                Live demo
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-              <a href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">Source</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-thumb thumb-2">
-            <span class="project-num">02</span>
-          </div>
-          <div class="project-body">
-            <h3>Project Two</h3>
-            <p>Short description of what this project does and the problem it solves.</p>
-            <div class="tags">
-              <span>JavaScript</span><span>API</span>
-            </div>
-            <div class="project-links">
-              <a href="#" target="_blank" rel="noopener">
-                Live demo
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-              <a href="#" target="_blank" rel="noopener">Source</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="project-thumb thumb-3">
-            <span class="project-num">03</span>
-          </div>
-          <div class="project-body">
-            <h3>Project Three</h3>
-            <p>Short description of what this project does and the problem it solves.</p>
-            <div class="tags">
-              <span>Frontend</span><span>UI</span>
-            </div>
-            <div class="project-links">
-              <a href="#" target="_blank" rel="noopener">
-                Live demo
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-              <a href="#" target="_blank" rel="noopener">Source</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
     <!-- CONTACT -->
     <section id="contact" class="section container">
-      <div class="contact-card reveal">
-        <div class="contact-head">
-          <span class="kicker">05 — Contact</span>
-          <h2 class="contact-title">Let's build something together.</h2>
-          <p class="contact-sub">The fastest way to reach me is by email — I usually reply within a day or two.</p>
-        </div>
-
-        <div class="contact-pills">
-          <a class="email-pill" href="mailto:zionpanitan44@gmail.com" aria-label="Send me an email">
-            <span class="email-icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
-            </span>
-            <span class="email-text">
-              <span class="email-label">Email</span>
-              <span class="email-address">zionpanitan44@gmail.com</span>
-            </span>
-            <span class="email-arrow" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </span>
-          </a>
-
-          <a class="email-pill" href="https://github.com/hyper-lab" target="_blank" rel="noopener" aria-label="Visit my GitHub profile">
-            <span class="email-icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5 3.3 9.3 7.8 10.8.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.8 2.5 1.5 3.1.1.7.4 1.2.7 1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.8C23.5 5.7 18.3.5 12 .5z"/></svg>
-            </span>
-            <span class="email-text">
-              <span class="email-label">GitHub</span>
-              <span class="email-address">Zion Cesar Panitan</span>
-            </span>
-            <span class="email-arrow" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </span>
-          </a>
-
-          <a class="email-pill" href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener" aria-label="Visit my LinkedIn profile">
-            <span class="email-icon" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3zm-1.5-11.3a1.7 1.7 0 1 1 0-3.4 1.7 1.7 0 0 1 0 3.4zM19 19h-3v-5c0-1.2-.4-2-1.5-2-.8 0-1.3.5-1.5 1.1V19h-3V9h3v1.3a3 3 0 0 1 2.7-1.5c2 0 3.3 1.3 3.3 4z"/></svg>
-            </span>
-            <span class="email-text">
-              <span class="email-label">LinkedIn</span>
-              <span class="email-address">/in/YOUR-HANDLE</span>
-            </span>
-            <span class="email-arrow" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </span>
-          </a>
-        </div>
-      </div>
+      <header class="section-head">
+        <h2 class="section-title">Contact</h2>
+      </header>
+      <p class="contact-lead">The fastest way to reach me is email — usually a reply within a day or two.</p>
+      <ul class="contact-links">
+        <li>
+          <span class="contact-key">Email</span>
+          <a href="mailto:zionpanitan44@gmail.com">zionpanitan44@gmail.com</a>
+        </li>
+        <li>
+          <span class="contact-key">GitHub</span>
+          <a href="https://github.com/hyper-lab" target="_blank" rel="noopener">github.com/hyper-lab</a>
+        </li>
+        <li>
+          <span class="contact-key">LinkedIn</span>
+          <a href="https://linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">linkedin.com/in/YOUR-HANDLE</a>
+        </li>
+      </ul>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Zion · Built with HTML, CSS &amp; JS</p>
-      <a href="#top" class="back-top">Back to top ↑</a>
+      <p>© <span id="year"></span> Zion Cesar Panitan</p>
+      <a href="#top" class="back-top">Top ↑</a>
     </div>
   </footer>
 
