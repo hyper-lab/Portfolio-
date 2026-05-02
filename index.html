@@ -4,17 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Zion Cesar Panitan — Developer & UI Designer." />
-  <meta name="theme-color" content="#0a1426" />
+  <meta name="theme-color" content="#050914" />
   <title>Zion Cesar Panitan — Developer &amp; UI Designer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="grid-lines" aria-hidden="true"></div>
   <div class="bloom" aria-hidden="true"></div>
 
   <header class="site-header">
@@ -28,16 +30,16 @@
       </a>
       <nav class="nav">
         <ul class="nav-links" id="navLinks">
-          <li><a href="#work">Work</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#now">Now</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#work">Work</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
       <div class="nav-actions">
         <a class="btn btn-pill-ghost" href="#contact">
           <span class="dot-live" aria-hidden="true"></span>
-          <span>Open for work</span>
+          <span>Available</span>
         </a>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span>
@@ -49,169 +51,63 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <p class="eyebrow">
-            <span>Developer &amp; UI Designer</span>
-            <span class="dot-sep">·</span>
-            <span>Philippines</span>
-          </p>
+      <div class="container hero-inner">
+        <p class="eyebrow" data-reveal>
+          <span class="dot-live" aria-hidden="true"></span>
+          <span>Developer &amp; UI Designer · Philippines</span>
+        </p>
 
-          <h1 class="hero-title">
-            Zion Cesar<br />
-            <span class="title-accent">Panitan.</span>
-          </h1>
-
-          <p class="hero-statement">
-            I design and build small, considered web tools — focused on careful interaction, clean front-end engineering, and the kind of polish you only get when the details are taken seriously.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#work">
-              View selected work
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-            <a class="btn btn-ghost" href="#contact">Get in touch</a>
-          </div>
-        </div>
-
-        <a class="hero-preview" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" aria-label="Open CasePoint live demo">
-          <div class="preview-frame">
-            <div class="preview-bar">
-              <span class="bar-dot"></span>
-              <span class="bar-dot"></span>
-              <span class="bar-dot"></span>
-              <span class="bar-url">casepoint.app</span>
-            </div>
-            <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
-          </div>
-          <span class="preview-label">
-            <span class="preview-tag">Latest</span>
-            <span>CasePoint — Legal RAG</span>
+        <h1 class="hero-title" data-reveal>
+          <span class="hero-hi">Hi, I'm</span>
+          <span class="hero-name">
+            Zion <span class="title-accent">Panitan</span>.
           </span>
-        </a>
-      </div>
+        </h1>
 
-      <div class="hero-marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>HTML</span><span>·</span>
-          <span>CSS</span><span>·</span>
-          <span>JavaScript</span><span>·</span>
-          <span>UI Design</span><span>·</span>
-          <span>RAG</span><span>·</span>
-          <span>Front-end</span><span>·</span>
-          <span>Figma</span><span>·</span>
-          <span>Git</span><span>·</span>
-          <span>HTML</span><span>·</span>
-          <span>CSS</span><span>·</span>
-          <span>JavaScript</span><span>·</span>
-          <span>UI Design</span><span>·</span>
-          <span>RAG</span><span>·</span>
-          <span>Front-end</span><span>·</span>
-          <span>Figma</span><span>·</span>
-          <span>Git</span><span>·</span>
-        </div>
-      </div>
-    </section>
+        <p class="hero-typing" data-reveal>
+          <span class="prompt">&gt;</span>
+          <span id="typed"></span><span class="caret" aria-hidden="true"></span>
+        </p>
 
-    <!-- FEATURED -->
-    <section id="work" class="featured">
-      <div class="container">
-        <header class="section-head">
-          <span class="section-label">Featured</span>
-          <h2 class="section-title">Selected case study</h2>
-        </header>
+        <p class="hero-statement" data-reveal>
+          I design and build small, considered web tools — focused on careful interaction, clean front-end engineering, and the kind of polish you only get when the details are taken seriously.
+        </p>
 
-        <article class="case glass">
-          <a class="case-media" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">
-            <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint Advanced User Dashboard" loading="lazy" />
+        <div class="hero-actions" data-reveal>
+          <a class="btn btn-primary" href="#work">
+            View my work
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
 
-          <div class="case-info">
-            <div class="case-meta">
-              <span>2025</span>
-              <span class="dot-sep">·</span>
-              <span>High-fidelity prototype</span>
-              <span class="status-pill">Live</span>
-            </div>
-            <h3 class="case-title">CasePoint</h3>
-            <p class="case-tag">A legal-research RAG platform with grounded citations &amp; role-based access.</p>
-
-            <p class="case-body">
-              CasePoint helps legal staff search and reason across case files. Every AI answer is paired with the exact passage and page it came from. The system supports role-based access, document insights, statistical reports, and a choice between OpenAI and a local Ollama model for privacy-sensitive queries.
-            </p>
-
-            <div class="case-grid">
-              <div><dt>Role</dt><dd>Design &amp; Front-end</dd></div>
-              <div><dt>Stack</dt><dd>HTML · CSS · JavaScript</dd></div>
-              <div><dt>Theme</dt><dd>RAG · Legal-tech</dd></div>
-              <div><dt>Year</dt><dd>2025</dd></div>
-            </div>
-
-            <div class="case-actions">
-              <a class="btn btn-primary btn-sm" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">
-                Visit live site
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-              </a>
-              <a class="btn btn-ghost btn-sm" href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">
-                Source
-              </a>
-            </div>
+        <div class="hero-stats" data-reveal>
+          <div class="stat">
+            <span class="stat-num">2025</span>
+            <span class="stat-label">Active</span>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- WORKS INDEX -->
-    <section class="works">
-      <div class="container">
-        <header class="section-head">
-          <span class="section-label">Index</span>
-          <h2 class="section-title">All work</h2>
-        </header>
-
-        <ol class="works-list" role="list">
-          <li class="work-item">
-            <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener" class="work-row">
-              <span class="work-num">01</span>
-              <span class="work-name">CasePoint</span>
-              <span class="work-type">Legal RAG · UI</span>
-              <span class="work-year">2025</span>
-              <span class="work-arrow">↗</span>
-            </a>
-          </li>
-          <li class="work-item soon">
-            <div class="work-row">
-              <span class="work-num">02</span>
-              <span class="work-name">In progress</span>
-              <span class="work-type">—</span>
-              <span class="work-year">—</span>
-              <span class="work-arrow">·</span>
-            </div>
-          </li>
-          <li class="work-item soon">
-            <div class="work-row">
-              <span class="work-num">03</span>
-              <span class="work-name">In progress</span>
-              <span class="work-type">—</span>
-              <span class="work-year">—</span>
-              <span class="work-arrow">·</span>
-            </div>
-          </li>
-        </ol>
+          <div class="stat">
+            <span class="stat-num">RAG</span>
+            <span class="stat-label">Focus</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">PH</span>
+            <span class="stat-label">GMT+8</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="about">
-      <div class="container about-grid">
-        <header class="section-head">
-          <span class="section-label">About</span>
-          <h2 class="section-title">Bio</h2>
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <span class="section-label">// About</span>
+          <h2 class="section-title">A bit about me.</h2>
         </header>
 
         <div class="about-cols">
-          <div class="about-bio">
+          <div class="about-bio" data-reveal>
             <p class="about-lead">
               I build small, considered web tools — currently exploring the intersection of AI and front-end craft.
             </p>
@@ -223,7 +119,7 @@
             </p>
           </div>
 
-          <aside class="about-aside glass">
+          <aside class="about-aside glass" data-reveal>
             <div class="aside-block">
               <h4>Discipline</h4>
               <p>Front-end engineering &amp; UI design</p>
@@ -245,36 +141,139 @@
       </div>
     </section>
 
-    <!-- NOW -->
-    <section id="now" class="now">
+    <!-- EXPERIENCE / TIMELINE -->
+    <section id="experience" class="experience">
       <div class="container">
-        <header class="section-head">
-          <span class="section-label">Now</span>
-          <h2 class="section-title">Currently</h2>
+        <header class="section-head" data-reveal>
+          <span class="section-label">// Experience</span>
+          <h2 class="section-title">My journey so far.</h2>
         </header>
 
-        <div class="now-grid">
-          <article class="now-card glass">
-            <span class="now-tag">Working on</span>
-            <p>Polishing CasePoint and exploring how to evaluate retrieval quality on Filipino legal text — where layout and language make off-the-shelf RAG fall short.</p>
-          </article>
-          <article class="now-card glass">
-            <span class="now-tag">Reading</span>
-            <p>Writing on retrieval-augmented generation, evaluation harnesses for LLMs, and the design language of editorial websites.</p>
-          </article>
-          <article class="now-card glass">
-            <span class="now-tag">Learning</span>
-            <p>Going deeper into Python and the practical side of vector search, plus continuing to refine my sense of typography on the web.</p>
-          </article>
-        </div>
+        <ol class="timeline" role="list">
+          <li class="tl-item" data-reveal>
+            <span class="tl-dot" aria-hidden="true"></span>
+            <article class="tl-card glass">
+              <header class="tl-head">
+                <span class="tl-tag">Now</span>
+                <span class="tl-date">2025 — Present</span>
+              </header>
+              <h3 class="tl-role">Front-end &amp; Design — CasePoint</h3>
+              <p class="tl-org">Hyper-Lab · Solo build</p>
+              <p class="tl-body">
+                Designed and shipped the high-fidelity prototype for CasePoint — a legal-research RAG platform with grounded citations and role-based access. Owned the full UI system, interaction details, and front-end implementation. 
+              </p>
+              <ul class="tl-tags">
+                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Figma</li><li>RAG</li>
+              </ul>
+            </article>
+          </li>
+
+          <li class="tl-item" data-reveal>
+            <span class="tl-dot" aria-hidden="true"></span>
+            <article class="tl-card glass">
+              <header class="tl-head">
+                <span class="tl-tag">Study</span>
+                <span class="tl-date">2024 — 2025</span>
+              </header>
+              <h3 class="tl-role">Self-directed front-end practice</h3>
+              <p class="tl-org">Independent</p>
+              <p class="tl-body">
+                Deep dive into modern front-end fundamentals — typography on the web, accessible components, motion design, and the practical side of vector search and retrieval-augmented generation.
+              </p>
+              <ul class="tl-tags">
+                <li>UI</li><li>Motion</li><li>Vector search</li><li>Python</li>
+              </ul>
+            </article>
+          </li>
+
+          <li class="tl-item" data-reveal>
+            <span class="tl-dot" aria-hidden="true"></span>
+            <article class="tl-card glass">
+              <header class="tl-head">
+                <span class="tl-tag">Foundations</span>
+                <span class="tl-date">Earlier</span>
+              </header>
+              <h3 class="tl-role">Web fundamentals &amp; first builds</h3>
+              <p class="tl-org">Self-taught</p>
+              <p class="tl-body">
+                Learned the web from the ground up — semantic HTML, modern CSS layout, vanilla JavaScript. Built small projects to internalize the basics before moving on to richer tools and frameworks.
+              </p>
+              <ul class="tl-tags">
+                <li>HTML</li><li>CSS</li><li>Git</li>
+              </ul>
+            </article>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- PREVIOUS WORK -->
+    <section id="work" class="works-section">
+      <div class="container">
+        <header class="works-head" data-reveal>
+          <h2 class="works-title">
+            <span class="works-title-ghost" aria-hidden="true">WORKS</span>
+            <span class="works-title-real">Recent Works</span>
+          </h2>
+          <span class="works-rule" aria-hidden="true"></span>
+          <span class="works-bottom-label">// works</span>
+        </header>
+
+        <ul class="works-cards" role="list">
+          <li class="wc-item" data-reveal>
+            <header class="wc-meta">
+              <div class="wc-meta-top">
+                <h3 class="wc-title">CasePoint</h3>
+                <div class="wc-links">
+                  <a href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">Live ↗</a>
+                  <a href="https://github.com/hyper-lab/Casepoint-Prototype" target="_blank" rel="noopener">Source ↗</a>
+                </div>
+              </div>
+              <p class="wc-desc">A legal-research RAG platform with grounded citations &amp; role-based access. (this is a prototype not the actual system, I attached the screenshot in the source file )</p>
+            </header>
+            <a class="wc-card" href="https://hyper-lab.github.io/Casepoint-Prototype/" target="_blank" rel="noopener">
+              <img src="https://github.com/user-attachments/assets/ff1c10ba-90b4-4cbe-9f5b-a583afab54ed" alt="CasePoint dashboard preview" loading="lazy" />
+            </a>
+          </li>
+
+          <li class="wc-item" data-reveal>
+            <header class="wc-meta">
+              <h3 class="wc-title">Project 02</h3>
+              <p class="wc-desc">Coming soon — a new project currently in progress.</p>
+            </header>
+            <a class="wc-card wc-card-empty" href="#" aria-disabled="true">
+              <span class="wc-empty">02</span>
+            </a>
+          </li>
+
+          <li class="wc-item" data-reveal>
+            <header class="wc-meta">
+              <h3 class="wc-title">Project 03</h3>
+              <p class="wc-desc">Coming soon — another build in the works.</p>
+            </header>
+            <a class="wc-card wc-card-empty" href="#" aria-disabled="true">
+              <span class="wc-empty">03</span>
+            </a>
+          </li>
+
+          <li class="wc-item" data-reveal>
+            <header class="wc-meta">
+              <h3 class="wc-title">Project 04</h3>
+              <p class="wc-desc">Coming soon — placeholder for a future project.</p>
+            </header>
+            <a class="wc-card wc-card-empty" href="#" aria-disabled="true">
+              <span class="wc-empty">04</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <             
     <section id="contact" class="contact">
-      <div class="container contact-shell glass">
+      <div class="container contact-shell glass" data-reveal>
         <div class="contact-text">
-          <span class="section-label">Contact</span>
+          <span class="section-label">// Contact</span>
           <h2 class="contact-headline">
             Have a project in mind, or just want to say hi?
           </h2>
