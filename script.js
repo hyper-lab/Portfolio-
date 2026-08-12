@@ -41,10 +41,10 @@ if (reduceMotion) {
 const typedEl = document.getElementById("typed");
 if (typedEl) {
   const phrases = [
-    "building thoughtful web tools.",
-    "designing AI-grounded interfaces.",
-    "shipping CasePoint — legal RAG.",
-    "obsessing over typography & motion.",
+    "building full-stack web applications.",
+    "designing RAG-based retrieval pipelines.",
+    "shipping CasePoint for RTC Branch 17.",
+    "backend lead — FastAPI, LlamaIndex, ChromaDB.",
   ];
 
   if (reduceMotion) {
